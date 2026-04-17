@@ -81,11 +81,11 @@
     .auth-screen.hidden { display: none; }
     .auth-card { width: 100%; max-width: 380px; text-align: center; }
     .auth-logo {
-      width: 44px; height: 44px; background: var(--text); border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 18px; color: white; margin: 0 auto 28px;
-      box-shadow: var(--shadow-md);
+      width: 56px; height: 56px; margin: 0 auto 28px; position: relative;
     }
+    .auth-logo .orka-anim { width: 56px; height: 56px; margin: 0; }
+    .auth-logo .orka-core { font-size: 13px; }
+    .auth-logo .orka-dot { width: 4px; height: 4px; }
     .auth-card h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 4px; }
     .auth-card .tagline { color: var(--text-3); font-size: 13px; margin-bottom: 40px; letter-spacing: -0.01em; }
     .auth-field {
@@ -754,6 +754,133 @@
     .va-stage.done .va-text { color: var(--text-3); }
     .va-stage.active .va-text { color: var(--text); font-weight: 500; }
 
+    /* ===== RESEARCH MODE ===== */
+    .research-progress {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden; margin: 8px 0 4px;
+      animation: msgIn 0.3s var(--ease);
+    }
+    .research-header {
+      display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+      background: linear-gradient(135deg, rgba(109,40,217,0.04), rgba(14,165,233,0.04));
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .research-globe {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #0EA5E9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: white; animation: globeSpin 3s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes globeSpin {
+      0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); }
+    }
+    .research-title { font-size: 13px; font-weight: 600; flex: 1; }
+    .research-subtitle { font-size: 11px; color: var(--text-3); }
+    .research-stages { padding: 10px 16px 14px; }
+    .research-stage {
+      display: flex; align-items: flex-start; gap: 10px; padding: 5px 0;
+      font-size: 12px; color: var(--text-2); transition: all 0.3s var(--ease);
+    }
+    .research-stage .rs-icon {
+      width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; margin-top: 1px; transition: all 0.3s;
+    }
+    .research-stage.pending .rs-icon { background: var(--bg-alt); color: var(--text-3); border: 1px solid var(--border); }
+    .research-stage.active .rs-icon { background: var(--accent); color: white; animation: thinkPulse 1.5s ease-in-out infinite; }
+    .research-stage.done .rs-icon { background: var(--green); color: white; }
+    .research-stage .rs-label { font-weight: 500; }
+    .research-stage.active .rs-label { color: var(--text); }
+    .research-stage.done .rs-label { color: var(--text-3); }
+    .research-stage .rs-detail {
+      font-size: 11px; color: var(--text-3); margin-top: 1px;
+    }
+    .research-sources-bar {
+      display: flex; gap: 6px; padding: 8px 16px 12px; flex-wrap: wrap;
+      border-top: 1px solid var(--border-soft);
+    }
+    .research-source-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; background: var(--bg-alt); border: 1px solid var(--border);
+      border-radius: 100px; font-size: 10px; color: var(--text-2);
+      animation: chipIn 0.3s var(--ease) both;
+    }
+    @keyframes chipIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+    .research-source-chip .rsc-favicon {
+      width: 12px; height: 12px; border-radius: 2px; background: var(--border);
+    }
+
+    /* ===== SOURCES CARD (in bubble) ===== */
+    .sources-card {
+      display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 4px;
+      padding: 10px 14px; background: var(--bg-alt); border: 1px solid var(--border);
+      border-radius: var(--radius); animation: msgIn 0.3s var(--ease);
+    }
+    .source-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 100px; font-size: 11px; color: var(--text-2);
+      text-decoration: none; transition: all 0.2s var(--ease);
+      cursor: pointer; max-width: 220px;
+    }
+    .source-chip:hover { border-color: var(--accent-ring); color: var(--accent); background: var(--accent-soft); }
+    .source-chip .sc-num {
+      width: 16px; height: 16px; border-radius: 50%; background: var(--accent);
+      color: white; font-size: 9px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .source-chip .sc-favicon {
+      width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0;
+    }
+    .source-chip .sc-domain {
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      font-weight: 500;
+    }
+
+    /* ===== ORKA LOGO ANIMATION ===== */
+    .orka-anim {
+      position: relative; width: 72px; height: 72px; margin: 0 auto 20px;
+    }
+    .orka-anim .orka-ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 2px solid transparent; border-top-color: var(--accent);
+      animation: orkaRing 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+    .orka-anim .orka-ring:nth-child(2) {
+      inset: 6px; border-top-color: #0EA5E9;
+      animation-duration: 2.4s; animation-direction: reverse;
+    }
+    .orka-anim .orka-ring:nth-child(3) {
+      inset: 12px; border-top-color: #8B5CF6;
+      animation-duration: 1.8s;
+    }
+    @keyframes orkaRing { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .orka-anim .orka-core {
+      position: absolute; inset: 18px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #0EA5E9);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 16px; color: white;
+      animation: orkaPulse 2.5s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(109, 40, 217, 0.2);
+    }
+    @keyframes orkaPulse { 0%, 100% { transform: scale(1); opacity: 0.95; } 50% { transform: scale(1.06); opacity: 1; } }
+    .orka-anim .orka-dot {
+      position: absolute; width: 6px; height: 6px; border-radius: 50%;
+      animation: orkaDotOrbit 4s linear infinite;
+    }
+    .orka-anim .orka-dot:nth-child(5) { background: #6D28D9; top: 0; left: 50%; animation-delay: 0s; }
+    .orka-anim .orka-dot:nth-child(6) { background: #0EA5E9; top: 50%; right: 0; animation-delay: -1s; }
+    .orka-anim .orka-dot:nth-child(7) { background: #16A34A; bottom: 0; left: 50%; animation-delay: -2s; }
+    .orka-anim .orka-dot:nth-child(8) { background: #DC2626; top: 50%; left: 0; animation-delay: -3s; }
+    @keyframes orkaDotOrbit {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      25% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.7); }
+      50% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.4); }
+      75% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.7); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
       :root { --panel-chat: 100%; --panel-code: 100%; }
@@ -777,7 +904,7 @@
 
 <div class="auth-screen" id="authScreen">
   <div class="auth-card">
-    <div class="auth-logo">O</div>
+    <div class="auth-logo"><div class="orka-anim"><div class="orka-ring"></div><div class="orka-ring"></div><div class="orka-ring"></div><div class="orka-core">O</div><div class="orka-dot"></div><div class="orka-dot"></div><div class="orka-dot"></div><div class="orka-dot"></div></div></div>
     <h1>Orka AI</h1>
     <p class="tagline">Koordinierte Intelligenz</p>
     <div id="loginForm">
@@ -847,6 +974,10 @@
         <div class="icon">T</div>
         <div class="info"><div class="label">Tief</div><div class="desc">6+ Agenten · ~20 Sek</div></div>
       </div>
+      <div class="settings-item" onclick="setDefaultMode('research')">
+        <div class="icon">🔍</div>
+        <div class="info"><div class="label">Recherche</div><div class="desc">Web-Suche · 4 Agenten · ~15 Sek</div></div>
+      </div>
     </div>
     <div class="settings-section">
       <div class="settings-label">Konto</div>
@@ -906,7 +1037,16 @@
     <div class="chat-panel" id="chatPanel">
       <div class="chat-area" id="chatArea">
         <div class="empty-state" id="emptyState">
-          <div class="empty-icon"><div class="dot"></div></div>
+          <div class="orka-anim">
+            <div class="orka-ring"></div>
+            <div class="orka-ring"></div>
+            <div class="orka-ring"></div>
+            <div class="orka-core">O</div>
+            <div class="orka-dot"></div>
+            <div class="orka-dot"></div>
+            <div class="orka-dot"></div>
+            <div class="orka-dot"></div>
+          </div>
           <h2>Wie kann ich helfen?</h2>
           <p>Sechs KI-Agenten arbeiten zusammen für Antworten auf einem neuen Level.</p>
           <div class="suggestions">
@@ -938,6 +1078,7 @@
         <button class="mode-chip" data-mode="fast" onclick="setMode('fast')">Schnell</button>
         <button class="mode-chip active" data-mode="smart" onclick="setMode('smart')">Smart</button>
         <button class="mode-chip" data-mode="deep" onclick="setMode('deep')">Tief</button>
+        <button class="mode-chip" data-mode="research" onclick="setMode('research')" style="gap:4px;display:inline-flex;align-items:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Recherche</button>
       </div>
       <div class="upload-preview-bar" id="uploadPreviewBar"></div>
       <div class="input-bar">
@@ -1058,6 +1199,12 @@ const AGENTS = {
     { id: 'critic', name: 'Critic', color: '#DC2626' },
     { id: 'synthesizer', name: 'Synthesizer', color: '#16A34A' },
     { id: 'judge', name: 'Quality Judge', color: '#D97706' }
+  ],
+  research: [
+    { id: 'analyst', name: 'Analyst', color: '#6D28D9' },
+    { id: 'researcher', name: 'Web-Researcher', color: '#0EA5E9' },
+    { id: 'verifier', name: 'Verifizierer', color: '#D97706' },
+    { id: 'synthesizer', name: 'Synthesizer', color: '#16A34A' }
   ]
 };
 
@@ -1415,7 +1562,7 @@ function openConversation(id) {
   closeWorkspace();
   conv.messages.forEach(function(msg) {
     if (msg.role === 'user') addUserBubble(msg.content, msg.attachments);
-    else addAssistantBubble(msg.content, msg.reasoning, msg.artifactId);
+    else addAssistantBubble(msg.content, msg.reasoning, msg.artifactId, msg.sources);
   });
   closeSidebar(); scrollToBottom();
 }
@@ -1479,6 +1626,7 @@ async function sendMessage() {
 
   if (videos.length > 0) await handleVideoAnalysis(conv, videos[0], content);
   else if (images.length > 0) await handleImageAnalysis(conv, images, content);
+  else if (currentMode === 'research') await handleResearch(conv, content);
   else await handleTextChat(conv, content);
 
   scrollToBottom();
@@ -1515,12 +1663,99 @@ async function handleTextChat(conv, content) {
     conv.messages.push({ role: 'assistant', content: data.response, reasoning: reasoning, artifactId: artifactId });
     saveConversations();
     addAssistantBubble(data.response, reasoning, artifactId);
+    if (data.needsResearch) showResearchSuggestion(conv, content);
   } catch (err) {
     clearInterval(thinkInterval); thinkingEl.remove();
     var errMsg = '**Fehler:** ' + (err.message || 'Verbindung fehlgeschlagen.');
     conv.messages.push({ role: 'assistant', content: errMsg, reasoning: [] });
     saveConversations();
     addAssistantBubble(errMsg, []);
+  }
+}
+
+function showResearchSuggestion(conv, content) {
+  var container = document.getElementById('messagesContainer');
+  var div = document.createElement('div');
+  div.className = 'message';
+  div.style.cssText = 'animation: msgIn 0.3s var(--ease)';
+  div.innerHTML = '<div style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:linear-gradient(135deg,rgba(109,40,217,0.06),rgba(14,165,233,0.06));border:1px solid var(--accent-ring);border-radius:100px;cursor:pointer;font-size:12px;font-weight:500;color:var(--accent);transition:all 0.2s" onclick="this.parentElement.remove();setMode(\'research\');document.getElementById(\'msgInput\').value=\'' + escapeHtml(content).replace(/'/g, "\\'") + '\';sendMessage()" onmouseover="this.style.background=\'var(--accent-soft)\'" onmouseout="this.style.background=\'linear-gradient(135deg,rgba(109,40,217,0.06),rgba(14,165,233,0.06))\'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Mit Web-Recherche vertiefen</div>';
+  container.appendChild(div);
+  scrollToBottom();
+}
+
+async function handleResearch(conv, content) {
+  var researchEl = showResearchProgress();
+  scrollToBottom();
+  var stages = [
+    { id: 'analyst', label: 'Frage analysieren', detail: 'Suchbegriffe extrahieren …' },
+    { id: 'researcher', label: 'Web durchsuchen', detail: 'Quellen finden und lesen …' },
+    { id: 'verifier', label: 'Fakten prüfen', detail: 'Informationen verifizieren …' },
+    { id: 'synthesizer', label: 'Antwort erstellen', detail: 'Quellenbasiert zusammenfassen …' }
+  ];
+  var stageIdx = 0;
+  var stageInterval = setInterval(function() {
+    if (stageIdx < stages.length) {
+      updateResearchProgress(researchEl, stages, stageIdx);
+      scrollToBottom();
+      stageIdx++;
+    }
+  }, 2500);
+
+  try {
+    var history = conv.messages.slice(-10);
+    var res = await fetch('/api/research', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: content, history: history })
+    });
+    clearInterval(stageInterval);
+    if (!res.ok) { var err = await res.json().catch(function(){return {}}); throw new Error(err.error || 'Recherche-Fehler'); }
+    var data = await res.json();
+    var reasoning = (data.reasoning || []).map(function(r) {
+      var agents = AGENTS.research;
+      var agentDef = agents.find(function(a){ return a.id === r.agent; });
+      return Object.assign({}, r, { color: agentDef ? agentDef.color : '#0EA5E9' });
+    });
+    researchEl.remove();
+    var artifactId = 'art_' + Date.now() + Math.random().toString(36).substr(2,4);
+    conv.messages.push({ role: 'assistant', content: data.response, reasoning: reasoning, sources: data.sources || [], artifactId: artifactId });
+    saveConversations();
+    addAssistantBubble(data.response, reasoning, artifactId, data.sources || []);
+  } catch (err) {
+    clearInterval(stageInterval); researchEl.remove();
+    var errMsg = '**Recherche-Fehler:** ' + (err.message || 'Bitte versuche es erneut.');
+    conv.messages.push({ role: 'assistant', content: errMsg, reasoning: [] });
+    saveConversations();
+    addAssistantBubble(errMsg, []);
+  }
+}
+
+function showResearchProgress() {
+  var container = document.getElementById('messagesContainer');
+  var div = document.createElement('div');
+  div.className = 'research-progress';
+  div.innerHTML = '<div class="research-header"><div class="research-globe">🔍</div><div><div class="research-title">Deep Web Research</div><div class="research-subtitle">Quellen werden durchsucht …</div></div></div><div class="research-stages" id="researchStages"></div><div class="research-sources-bar" id="researchSourcesBar" style="display:none"></div>';
+  container.appendChild(div);
+  return div;
+}
+
+function updateResearchProgress(el, stages, currentIdx) {
+  var stagesEl = el.querySelector('.research-stages');
+  stagesEl.innerHTML = stages.map(function(s, i) {
+    var cls = i < currentIdx ? 'done' : i === currentIdx ? 'active' : 'pending';
+    var icon = i < currentIdx ? '✓' : i === currentIdx ? '◆' : '○';
+    return '<div class="research-stage ' + cls + '"><div class="rs-icon">' + icon + '</div><div><div class="rs-label">' + s.label + '</div>' + (i === currentIdx ? '<div class="rs-detail">' + s.detail + '</div>' : '') + '</div></div>';
+  }).join('');
+  if (currentIdx >= 1) {
+    var sourcesBar = el.querySelector('.research-sources-bar');
+    sourcesBar.style.display = 'flex';
+    if (sourcesBar.children.length < currentIdx + 1) {
+      var chip = document.createElement('span');
+      chip.className = 'research-source-chip';
+      chip.style.animationDelay = (sourcesBar.children.length * 0.1) + 's';
+      chip.innerHTML = '<span class="rsc-favicon"></span><span>Quelle wird geladen …</span>';
+      sourcesBar.appendChild(chip);
+    }
   }
 }
 
@@ -1637,12 +1872,25 @@ function addUserBubble(content, attachments) {
   container.appendChild(div);
 }
 
-function addAssistantBubble(content, reasoning, artifactId) {
+function addAssistantBubble(content, reasoning, artifactId, sources) {
   var container = document.getElementById('messagesContainer');
   var div = document.createElement('div');
   div.className = 'message message-assistant';
   var renderedContent = typeof marked !== 'undefined' ? marked.parse(content) : escapeHtml(content);
   var reasoningId = 'reason_' + Date.now() + Math.random().toString(36).substr(2,4);
+
+  var sourcesHtml = '';
+  if (sources && sources.length > 0) {
+    sourcesHtml = '<div class="sources-card">' + sources.map(function(s, i) {
+      var domain = s.domain || '';
+      if (!domain && s.url) { try { domain = new URL(s.url).hostname.replace('www.', ''); } catch(e) {} }
+      var favicon = s.url ? 'https://www.google.com/s2/favicons?sz=32&domain=' + encodeURIComponent(domain) : '';
+      return '<a class="source-chip" href="' + escapeHtml(s.url || '#') + '" target="_blank" rel="noopener" title="' + escapeHtml(s.title || domain) + '">' +
+        '<span class="sc-num">' + (i + 1) + '</span>' +
+        (favicon ? '<img class="sc-favicon" src="' + favicon + '" alt="" onerror="this.style.display=\'none\'">' : '') +
+        '<span class="sc-domain">' + escapeHtml(domain || s.title || 'Quelle') + '</span></a>';
+    }).join('') + '</div>';
+  }
 
   var blocks = detectCodeArtifact(content);
   var artifactBtnHtml = '';
@@ -1666,7 +1914,7 @@ function addAssistantBubble(content, reasoning, artifactId) {
       '</div>';
   }
 
-  div.innerHTML = '<div class="bubble">' + renderedContent + '</div>' + artifactBtnHtml +
+  div.innerHTML = sourcesHtml + '<div class="bubble">' + renderedContent + '</div>' + artifactBtnHtml +
     '<div class="msg-actions"><button class="msg-action" onclick="copyMessage(this)">Kopieren</button>' + reasoningHtml + '</div>';
   container.appendChild(div);
 

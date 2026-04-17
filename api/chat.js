@@ -4,7 +4,7 @@
 const AGENT_DEFINITIONS = {
   analyst: {
     name: 'Analyst',
-    system: 'Du bist ein analytischer KI-Agent. Zerlege die Aufgabe in Kernkomponenten, identifiziere Anforderungen und strukturiere das Problem klar. Antworte auf Deutsch, kurz und präzise (max 2 Sätze).'
+    system: 'Du bist ein analytischer KI-Agent. Zerlege die Aufgabe in Kernkomponenten, identifiziere Anforderungen und strukturiere das Problem klar. Wenn die Frage aktuelle Fakten, Nachrichten, Preise, Daten oder Ereignisse nach deinem Wissensstichtag betrifft, beginne deine Antwort mit [RESEARCH_NEEDED]. Antworte auf Deutsch, kurz und präzise (max 2 Sätze).'
   },
   researcher: {
     name: 'Researcher',
@@ -152,6 +152,7 @@ export default async function handler(req, res) {
 
     // Run pre-synthesis agents
     let agentContext = '';
+    let needsResearch = false;
     for (const agentId of pipeline) {
       if (agentId === 'synthesizer') continue;
 
@@ -163,11 +164,18 @@ export default async function handler(req, res) {
       ];
 
       const summary = await callLLM(provider, model, agentMessages);
-      agentContext += `\n[${agent.name}]: ${summary}`;
+
+      // Detect if analyst signals research is needed
+      if (agentId === 'analyst' && summary.includes('[RESEARCH_NEEDED]')) {
+        needsResearch = true;
+      }
+
+      const cleanSummary = summary.replace('[RESEARCH_NEEDED]', '').trim();
+      agentContext += `\n[${agent.name}]: ${cleanSummary}`;
       reasoning.push({
         agent: agentId,
         name: agent.name,
-        summary: summary.substring(0, 200)
+        summary: cleanSummary.substring(0, 200)
       });
     }
 
@@ -199,7 +207,7 @@ export default async function handler(req, res) {
       });
     }
 
-    return res.status(200).json({ response, reasoning });
+    return res.status(200).json({ response, reasoning, needsResearch });
 
   } catch (error) {
     console.error('Chat API error:', error);
