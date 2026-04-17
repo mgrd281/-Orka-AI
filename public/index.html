@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orka AI — Koordinierte Intelligenz</title>
+  <meta name="description" content="Orka AI: Nicht ein KI-Modell — ein ganzes Team. Premium Multi-Agent Intelligence für iPhone, Android und Web.">
+  <meta name="theme-color" content="#0D0D1A">
+  <meta property="og:title" content="Orka AI — Koordinierte Intelligenz">
+  <meta property="og:description" content="Nicht ein KI-Modell — ein ganzes Team. Multiple KI-Agenten arbeiten zusammen für die beste Antwort.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://orka-ai.vercel.app">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #6C5CE7;
+      --primary-dark: #5A4BD1;
+      --secondary: #00D2FF;
+      --surface: #0D0D1A;
+      --surface-card: #161628;
+      --surface-elevated: #1E1E3A;
+      --text-primary: #FFFFFF;
+      --text-secondary: #8B8BA7;
+      --text-tertiary: #5A5A78;
+      --border: #2A2A4A;
+      --success: #00C48C;
+      --gradient-primary: linear-gradient(135deg, #6C5CE7, #00D2FF);
+      --gradient-premium: linear-gradient(135deg, #6C5CE7, #A855F7, #00D2FF);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--surface);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Ambient background ── */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .ambient::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      top: -200px; left: -100px;
+      background: radial-gradient(circle, rgba(108,92,231,0.12) 0%, transparent 70%);
+      animation: float 20s ease-in-out infinite;
+    }
+    .ambient::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      bottom: -150px; right: -100px;
+      background: radial-gradient(circle, rgba(0,210,255,0.08) 0%, transparent 70%);
+      animation: float 25s ease-in-out infinite reverse;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.05); }
+      66% { transform: translate(-20px, 15px) scale(0.95); }
+    }
+
+    /* ── Layout ── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 0;
+      background: rgba(13,13,26,0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(42,42,74,0.3);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo {
+      width: 34px; height: 34px;
+      background: var(--gradient-primary);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 16px; color: white;
+    }
+    .nav-name { font-weight: 700; font-size: 18px; color: var(--text-primary); }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: var(--text-secondary); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-cta {
+      background: var(--gradient-primary) !important;
+      color: white !important;
+      padding: 10px 22px !important;
+      border-radius: 12px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s, transform 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 160px 0 100px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px;
+      background: rgba(108,92,231,0.1);
+      border: 1px solid rgba(108,92,231,0.25);
+      border-radius: 100px;
+      font-size: 13px; font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 32px;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+    .hero h1 {
+      font-size: clamp(40px, 6vw, 64px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .hero h1 .gradient {
+      background: var(--gradient-premium);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 16px 32px;
+      background: var(--gradient-primary);
+      color: white;
+      border: none; border-radius: 14px;
+      font-size: 16px; font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      text-decoration: none;
+      box-shadow: 0 8px 32px rgba(108,92,231,0.3);
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 16px 32px;
+      background: var(--surface-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-size: 16px; font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .btn-secondary:hover { border-color: var(--text-tertiary); transform: translateY(-1px); }
+
+    /* ── Agent Visual ── */
+    .agent-visual {
+      margin: 80px auto 0;
+      max-width: 700px;
+      position: relative;
+    }
+    .agent-orbit {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--surface-card);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .agent-orbit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(108,92,231,0.06) 0%, transparent 60%);
+    }
+    .orbit-center {
+      width: 72px; height: 72px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 800; color: white;
+      z-index: 2;
+      box-shadow: 0 0 40px rgba(108,92,231,0.4);
+    }
+    .agent-node {
+      position: absolute;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: white;
+      border: 2px solid rgba(255,255,255,0.1);
+      z-index: 2;
+    }
+    .agent-node::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: -22px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px; font-weight: 500;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+    }
+    .agent-node:nth-child(2) { top: 12%; left: 20%; background: #6C5CE7; animation: orbit-node 8s ease-in-out infinite; }
+    .agent-node:nth-child(3) { top: 12%; right: 20%; background: #00D2FF; animation: orbit-node 8s ease-in-out infinite 1.3s; }
+    .agent-node:nth-child(4) { top: 50%; left: 8%; background: #A855F7; transform: translateY(-50%); animation: orbit-node 8s ease-in-out infinite 2.6s; }
+    .agent-node:nth-child(5) { top: 50%; right: 8%; background: #FF6B6B; transform: translateY(-50%); animation: orbit-node 8s ease-in-out infinite 3.9s; }
+    .agent-node:nth-child(6) { bottom: 12%; left: 20%; background: #00C48C; animation: orbit-node 8s ease-in-out infinite 5.2s; }
+    .agent-node:nth-child(7) { bottom: 12%; right: 20%; background: #FFB800; animation: orbit-node 8s ease-in-out infinite 6.5s; }
+    @keyframes orbit-node {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.12); opacity: 1; }
+    }
+    .orbit-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(108,92,231,0.2), transparent);
+      z-index: 1;
+    }
+
+    /* ── Modes ── */
+    .modes { padding: 120px 0; }
+    .section-label {
+      font-size: 13px; font-weight: 600; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 2px;
+      text-align: center; margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800; text-align: center;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 16px; color: var(--text-secondary);
+      text-align: center; max-width: 520px;
+      margin: 0 auto 56px;
+    }
+    .modes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .mode-card {
+      padding: 32px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .mode-card:hover { border-color: rgba(108,92,231,0.4); transform: translateY(-4px); }
+    .mode-card.featured {
+      border-color: rgba(108,92,231,0.4);
+      box-shadow: 0 8px 40px rgba(108,92,231,0.1);
+    }
+    .mode-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .mode-card:nth-child(1) .mode-icon { background: rgba(0,196,140,0.12); }
+    .mode-card:nth-child(2) .mode-icon { background: rgba(108,92,231,0.12); }
+    .mode-card:nth-child(3) .mode-icon { background: rgba(0,210,255,0.12); }
+    .mode-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .mode-meta { font-size: 13px; color: var(--text-tertiary); margin-bottom: 14px; }
+    .mode-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* ── Features ── */
+    .features { padding: 80px 0 120px; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .feature-card {
+      padding: 28px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: border-color 0.3s;
+    }
+    .feature-card:hover { border-color: rgba(108,92,231,0.3); }
+    .feature-icon { font-size: 28px; margin-bottom: 16px; }
+    .feature-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .feature-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── Pricing ── */
+    .pricing { padding: 80px 0 120px; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 920px; margin: 0 auto; }
+    .price-card {
+      padding: 36px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .price-card:hover { transform: translateY(-4px); }
+    .price-card.popular {
+      border-color: var(--primary);
+      box-shadow: 0 8px 40px rgba(108,92,231,0.15);
+    }
+    .price-card.popular::before {
+      content: 'Beliebt';
+      position: absolute; top: -12px; left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 16px;
+      background: var(--gradient-primary);
+      border-radius: 100px;
+      font-size: 12px; font-weight: 700; color: white;
+    }
+    .price-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .price-amount {
+      font-size: 40px; font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .price-amount .currency { font-size: 20px; font-weight: 600; vertical-align: super; }
+    .price-period { font-size: 13px; color: var(--text-tertiary); margin-bottom: 24px; }
+    .price-features { list-style: none; margin-bottom: 28px; }
+    .price-features li {
+      padding: 8px 0;
+      font-size: 14px; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .price-features li::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: 700; font-size: 14px;
+      flex-shrink: 0;
+    }
+    .price-btn {
+      display: block; width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 15px; font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+      text-decoration: none;
+    }
+    .price-btn:hover { opacity: 0.85; }
+    .price-btn-primary { background: var(--gradient-primary); color: white; }
+    .price-btn-secondary { background: var(--surface-elevated); color: var(--text-primary); border: 1px solid var(--border); }
+
+    /* ── Footer ── */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    footer p { font-size: 13px; color: var(--text-tertiary); }
+    footer a { color: var(--text-secondary); text-decoration: none; }
+    footer a:hover { color: var(--text-primary); }
+    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero { padding: 120px 0 60px; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .agent-visual { margin-top: 48px; }
+      .modes, .features, .pricing { padding: 60px 0; }
+    }
+
+    /* ── Animations ── */
+    .fade-in {
+      opacity: 0; transform: translateY(20px);
+      animation: fadeIn 0.6s ease forwards;
+    }
+    .fade-in:nth-child(2) { animation-delay: 0.1s; }
+    .fade-in:nth-child(3) { animation-delay: 0.2s; }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="ambient"></div>
+
+<!-- ── Nav ── -->
+<nav>
+  <div class="container">
+    <a href="#" class="nav-brand">
+      <div class="nav-logo">O</div>
+      <span class="nav-name">Orka AI</span>
+    </a>
+    <div class="nav-links">
+      <a href="#modi">Modi</a>
+      <a href="#features">Features</a>
+      <a href="#preise">Preise</a>
+      <a href="#start" class="nav-cta">Jetzt starten</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge fade-in">
+      <span class="dot"></span>
+      Multi-Agent Intelligence Platform
+    </div>
+    <h1 class="fade-in">
+      Nicht ein KI-Modell.<br>
+      <span class="gradient">Ein ganzes Team.</span>
+    </h1>
+    <p class="fade-in">
+      Orka AI orchestriert multiple KI-Agenten — Analyst, Researcher, Creative, Critic, Synthesizer — die zusammen denken, kritisieren und verfeinern. Für Antworten auf einem neuen Level.
+    </p>
+    <div class="hero-actions fade-in">
+      <a href="#start" class="btn-primary">
+        <span>Kostenlos starten</span>
+        <span>→</span>
+      </a>
+      <a href="#modi" class="btn-secondary">
+        <span>So funktioniert's</span>
+      </a>
+    </div>
+
+    <!-- Agent visualization -->
+    <div class="agent-visual fade-in">
+      <div class="agent-orbit">
+        <div class="agent-node" data-label="Analyst">A</div>
+        <div class="agent-node" data-label="Researcher">R</div>
+        <div class="agent-node" data-label="Creative">C</div>
+        <div class="agent-node" data-label="Critic">K</div>
+        <div class="agent-node" data-label="Synthesizer">S</div>
+        <div class="agent-node" data-label="Judge">J</div>
+        <div class="orbit-center">O</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Modes ── -->
+<section class="modes" id="modi">
+  <div class="container">
+    <div class="section-label">Intelligenz-Modi</div>
+    <h2 class="section-title">Drei Stufen. Deine Wahl.</h2>
+    <p class="section-subtitle">
+      Von blitzschnellen Antworten bis zur tiefsten Analyse — du entscheidest, wie gründlich Orka denkt.
+    </p>
+    <div class="modes-grid">
+      <div class="mode-card fade-in">
+        <div class="mode-icon">⚡</div>
+        <div class="mode-name">Schnell</div>
+        <div class="mode-meta">2 Agenten · ~3 Sek · Niedrige Kosten</div>
+        <div class="mode-desc">Für schnelle Fragen, kurze Aufgaben und einfache Antworten. Analyst und Synthesizer liefern direkt.</div>
+      </div>
+      <div class="mode-card featured fade-in">
+        <div class="mode-icon">🧠</div>
+        <div class="mode-name">Smart</div>
+        <div class="mode-meta">5 Agenten · ~8 Sek · Standard</div>
+        <div class="mode-desc">Die volle Pipeline. Fünf Agenten analysieren, recherchieren, kreieren, kritisieren und synthetisieren. Der Standard für starke Antworten.</div>
+      </div>
+      <div class="mode-card fade-in">
+        <div class="mode-icon">🔬</div>
+        <div class="mode-name">Tief</div>
+        <div class="mode-meta">6+ Agenten · ~20 Sek · Premium</div>
+        <div class="mode-desc">Maximale Tiefe mit Qualitäts-Judge und Verfeinerungsschleifen. Für Aufgaben, bei denen jedes Detail zählt.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ── -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Gebaut für Profis</h2>
+    <p class="section-subtitle">
+      Alles, was du brauchst — nichts, was dich ablenkt.
+    </p>
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">Multi-Agent Orchestrierung</div>
+        <div class="feature-desc">6 spezialisierte KI-Agenten arbeiten koordiniert an jeder Antwort.</div>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">💭</div>
+        <div class="feature-title">Denkprozess anzeigen</div>
+        <div class="feature-desc">Sieh genau, wie jeder Agent gedacht hat. Volle Transparenz.</div>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🌍</div>
+        <div class="feature-title">Deutsch · English · العربية</div>
+        <div class="feature-desc">Native Sprachunterstützung mit vollständigem RTL für Arabisch.</div>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">iPhone · Android · Web</div>
+        <div class="feature-desc">Eine App, alle Plattformen. Premium-Erlebnis überall.</div>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Datenschutz</div>
+        <div class="feature-desc">Ende-zu-Ende verschlüsselt. Deine Daten gehören dir.</div>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Streaming-Antworten</div>
+        <div class="feature-desc">Echtzeit-Streaming für sofortiges Feedback während die Agenten arbeiten.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pricing ── -->
+<section class="pricing" id="preise">
+  <div class="container">
+    <div class="section-label">Preise</div>
+    <h2 class="section-title">Einfach. Fair. Premium.</h2>
+    <p class="section-subtitle">
+      Starte kostenlos. Upgrade, wenn du bereit bist.
+    </p>
+    <div class="pricing-grid">
+      <div class="price-card fade-in">
+        <div class="price-name">Kostenlos</div>
+        <div class="price-amount"><span class="currency">€</span>0</div>
+        <div class="price-period">Für immer kostenlos</div>
+        <ul class="price-features">
+          <li>15 Nachrichten / Tag</li>
+          <li>Schnell-Modus</li>
+          <li>Basis-Antworten</li>
+        </ul>
+        <a href="#start" class="price-btn price-btn-secondary">Kostenlos starten</a>
+      </div>
+      <div class="price-card popular fade-in">
+        <div class="price-name">Pro</div>
+        <div class="price-amount"><span class="currency">€</span>9,99</div>
+        <div class="price-period">pro Monat</div>
+        <ul class="price-features">
+          <li>100 Nachrichten / Tag</li>
+          <li>Smart & Schnell Modus</li>
+          <li>Denkprozess-Anzeige</li>
+          <li>Gesprächsexport</li>
+        </ul>
+        <a href="#start" class="price-btn price-btn-primary">Pro wählen</a>
+      </div>
+      <div class="price-card fade-in">
+        <div class="price-name">Premium</div>
+        <div class="price-amount"><span class="currency">€</span>24,99</div>
+        <div class="price-period">pro Monat</div>
+        <ul class="price-features">
+          <li>Unbegrenzte Nachrichten</li>
+          <li>Alle Modi inkl. Tief</li>
+          <li>Prioritäts-Verarbeitung</li>
+          <li>Frühzugang zu Features</li>
+        </ul>
+        <a href="#start" class="price-btn price-btn-secondary">Premium wählen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="start" style="padding: 80px 0 120px;">
+  <div class="container" style="text-align: center;">
+    <h2 class="section-title">Bereit für koordinierte Intelligenz?</h2>
+    <p class="section-subtitle" style="margin-bottom: 40px;">
+      Starte kostenlos — kein Kreditkarte nötig. Upgrade jederzeit.
+    </p>
+    <a href="#" class="btn-primary" style="font-size: 18px; padding: 18px 40px;">
+      Jetzt kostenlos starten →
+    </a>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="#">Datenschutz</a>
+      <a href="#">Impressum</a>
+      <a href="#">AGB</a>
+      <a href="#">Kontakt</a>
+    </div>
+    <p>© 2026 Orka AI. Koordinierte Intelligenz.</p>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
