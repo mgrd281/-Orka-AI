@@ -4,142 +4,143 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Orka AI</title>
-  <meta name="theme-color" content="#0D0D1A">
+  <meta name="theme-color" content="#FAF9F7">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <!-- Marked.js for markdown rendering -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --primary: #6C5CE7;
-      --primary-dark: #5A4BD1;
-      --secondary: #00D2FF;
-      --surface: #0D0D1A;
-      --surface-card: #161628;
-      --surface-elevated: #1E1E3A;
-      --text-primary: #FFFFFF;
-      --text-secondary: #8B8BA7;
-      --text-tertiary: #5A5A78;
-      --border: #2A2A4A;
-      --success: #00C48C;
-      --warning: #FFB800;
-      --error: #FF4757;
-      --agent-analyst: #6C5CE7;
-      --agent-researcher: #00D2FF;
-      --agent-creative: #A855F7;
-      --agent-critic: #FF6B6B;
-      --agent-synthesizer: #00C48C;
-      --agent-judge: #FFB800;
+      --bg: #FAF9F7;
+      --bg-alt: #F3F2EE;
+      --surface: #FFFFFF;
+      --text: #0A0A0A;
+      --text-2: #6B6B6B;
+      --text-3: #9CA3AF;
+      --accent: #4318FF;
+      --accent-soft: rgba(67, 24, 255, 0.06);
+      --accent-mid: rgba(67, 24, 255, 0.12);
+      --border: #E6E6E3;
+      --border-soft: rgba(0,0,0,0.04);
+      --green: #22C55E;
+      --red: #EF4444;
+      --code-bg: #F5F5F0;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
     html, body { height: 100%; overflow: hidden; }
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--surface);
-      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ══════════════ AUTH SCREEN ══════════════ */
+    /* ═══════════ AUTH ═══════════ */
     .auth-screen {
       display: flex; align-items: center; justify-content: center;
       height: 100vh; padding: 24px;
-      background: var(--surface);
+      background: var(--bg);
     }
     .auth-screen.hidden { display: none; }
-    .auth-card {
-      width: 100%; max-width: 400px;
-      text-align: center;
-    }
+    .auth-card { width: 100%; max-width: 380px; text-align: center; }
     .auth-logo {
-      width: 64px; height: 64px;
-      background: linear-gradient(135deg, #6C5CE7, #00D2FF);
-      border-radius: 18px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 28px; color: white;
-      margin: 0 auto 24px;
-      box-shadow: 0 0 48px rgba(108,92,231,0.3);
-    }
-    .auth-card h1 { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
-    .auth-card .tagline { color: var(--text-secondary); font-size: 14px; margin-bottom: 40px; }
-    .auth-field {
-      width: 100%; padding: 15px 18px;
-      background: var(--surface-card);
-      border: 1px solid var(--border);
+      width: 48px; height: 48px;
+      background: var(--text);
       border-radius: 14px;
-      color: white; font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 20px; color: white;
+      margin: 0 auto 28px;
+    }
+    .auth-card h1 {
+      font-size: 26px; font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .auth-card .tagline {
+      color: var(--text-3); font-size: 14px;
+      margin-bottom: 40px;
+    }
+    .auth-field {
+      width: 100%; padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text); font-size: 15px;
       font-family: inherit; outline: none;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       transition: border-color 0.2s;
     }
-    .auth-field:focus { border-color: var(--primary); }
-    .auth-field::placeholder { color: var(--text-tertiary); }
+    .auth-field:focus { border-color: var(--accent); }
+    .auth-field::placeholder { color: var(--text-3); }
     .auth-btn {
-      width: 100%; padding: 16px;
-      background: linear-gradient(135deg, #6C5CE7, #00D2FF);
+      width: 100%; padding: 15px;
+      background: var(--text);
       color: white; border: none;
-      border-radius: 14px;
-      font-size: 16px; font-weight: 600;
+      border-radius: 12px;
+      font-size: 15px; font-weight: 600;
       cursor: pointer; font-family: inherit;
-      margin-top: 8px;
-      transition: opacity 0.2s;
+      margin-top: 6px;
+      transition: background 0.3s;
     }
-    .auth-btn:hover { opacity: 0.9; }
+    .auth-btn:hover { background: var(--accent); }
     .auth-toggle {
-      margin-top: 24px; font-size: 13px; color: var(--text-secondary);
+      margin-top: 24px; font-size: 13px; color: var(--text-2);
     }
     .auth-toggle a {
-      color: var(--primary); text-decoration: none; font-weight: 600;
-      cursor: pointer;
+      color: var(--accent); text-decoration: none;
+      font-weight: 600; cursor: pointer;
     }
     .auth-error {
-      color: var(--error); font-size: 13px;
-      margin-top: 12px; display: none;
+      color: var(--red); font-size: 13px;
+      margin-top: 10px; display: none;
     }
     .auth-error.show { display: block; }
 
-    /* ══════════════ APP SHELL ══════════════ */
+    /* ═══════════ APP ═══════════ */
     .app { display: none; height: 100vh; flex-direction: column; }
     .app.active { display: flex; }
 
     /* ── Top Bar ── */
     .topbar {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 16px;
-      background: var(--surface);
-      border-bottom: 1px solid rgba(42,42,74,0.4);
+      padding: 0 16px; height: 56px;
+      background: rgba(250, 249, 247, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-soft);
       flex-shrink: 0;
     }
     .topbar-left { display: flex; align-items: center; gap: 12px; }
     .topbar-logo {
-      width: 32px; height: 32px;
-      background: linear-gradient(135deg, #6C5CE7, #00D2FF);
-      border-radius: 9px;
+      width: 28px; height: 28px;
+      background: var(--text);
+      border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 14px; color: white;
+      font-weight: 800; font-size: 12px; color: white;
     }
-    .topbar-title { font-weight: 700; font-size: 16px; }
-    .topbar-right { display: flex; align-items: center; gap: 8px; }
+    .topbar-title { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+    .topbar-right { display: flex; align-items: center; gap: 4px; }
     .topbar-btn {
       width: 36px; height: 36px;
       background: none; border: none;
-      color: var(--text-secondary);
+      color: var(--text-3);
       border-radius: 10px;
-      cursor: pointer; font-size: 18px;
+      cursor: pointer; font-size: 17px;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.2s, color 0.2s;
     }
-    .topbar-btn:hover { background: var(--surface-card); color: var(--text-primary); }
+    .topbar-btn:hover { background: var(--surface); color: var(--text); }
 
     /* ── Chat Area ── */
     .chat-area {
       flex: 1; overflow-y: auto;
-      padding: 16px;
+      padding: 20px 16px;
       scroll-behavior: smooth;
     }
-    .chat-area::-webkit-scrollbar { width: 4px; }
-    .chat-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    .chat-area::-webkit-scrollbar { width: 3px; }
+    .chat-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
     /* ── Empty State ── */
     .empty-state {
@@ -150,139 +151,196 @@
     }
     .empty-state.hidden { display: none; }
     .empty-icon {
-      width: 72px; height: 72px;
-      background: rgba(108,92,231,0.1);
-      border-radius: 50%;
+      width: 48px; height: 48px;
+      background: var(--accent-soft);
+      border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 32px;
       margin-bottom: 24px;
     }
-    .empty-state h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-    .empty-state p { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; max-width: 360px; line-height: 1.6; }
-    .suggestions { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 480px; }
+    .empty-icon .dot {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+    .empty-state h2 {
+      font-size: 22px; font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .empty-state p {
+      font-size: 14px; color: var(--text-2);
+      margin-bottom: 36px; max-width: 340px;
+      line-height: 1.6;
+    }
+    .suggestions {
+      display: flex; flex-direction: column;
+      gap: 8px; width: 100%; max-width: 460px;
+    }
     .suggestion {
       display: flex; align-items: center; gap: 14px;
-      padding: 16px 20px;
-      background: var(--surface-card);
+      padding: 15px 18px;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
       cursor: pointer;
-      transition: border-color 0.2s, transform 0.15s;
+      transition: border-color 0.2s, transform 0.2s;
       text-align: left;
     }
-    .suggestion:hover { border-color: rgba(108,92,231,0.4); transform: translateX(4px); }
-    .suggestion .emoji { font-size: 20px; flex-shrink: 0; }
-    .suggestion .text { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
-    .suggestion .arrow { color: var(--text-tertiary); margin-left: auto; flex-shrink: 0; }
+    .suggestion:hover {
+      border-color: rgba(67, 24, 255, 0.2);
+      transform: translateX(3px);
+    }
+    .suggestion .marker {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .suggestion .text {
+      font-size: 13px; color: var(--text-2);
+      line-height: 1.4; flex: 1;
+    }
+    .suggestion .arrow {
+      color: var(--text-3); font-size: 14px;
+      flex-shrink: 0;
+    }
 
     /* ── Messages ── */
-    .message { margin-bottom: 16px; animation: msgIn 0.3s ease; }
-    @keyframes msgIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .message { margin-bottom: 20px; animation: msgIn 0.35s var(--ease); }
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     .message-user { display: flex; justify-content: flex-end; }
     .message-user .bubble {
-      background: var(--primary);
+      background: var(--text);
       color: white;
-      padding: 14px 18px;
-      border-radius: 18px 18px 4px 18px;
+      padding: 13px 18px;
+      border-radius: 16px 16px 4px 16px;
       max-width: 75%;
       font-size: 14px; line-height: 1.6;
       word-break: break-word;
     }
     .message-assistant { display: flex; flex-direction: column; align-items: flex-start; }
     .message-assistant .bubble {
-      background: var(--surface-card);
+      background: var(--surface);
       border: 1px solid var(--border);
       padding: 18px 20px;
-      border-radius: 18px 18px 18px 4px;
+      border-radius: 16px 16px 16px 4px;
       max-width: 85%;
       font-size: 14px; line-height: 1.7;
       word-break: break-word;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
-    .message-assistant .bubble h1, .message-assistant .bubble h2, .message-assistant .bubble h3 {
-      margin: 16px 0 8px; font-weight: 700;
+    .message-assistant .bubble h1,
+    .message-assistant .bubble h2,
+    .message-assistant .bubble h3 {
+      margin: 16px 0 8px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
     }
     .message-assistant .bubble h1 { font-size: 20px; }
     .message-assistant .bubble h2 { font-size: 17px; }
     .message-assistant .bubble h3 { font-size: 15px; }
     .message-assistant .bubble p { margin: 8px 0; }
-    .message-assistant .bubble ul, .message-assistant .bubble ol { padding-left: 20px; margin: 8px 0; }
+    .message-assistant .bubble ul,
+    .message-assistant .bubble ol { padding-left: 20px; margin: 8px 0; }
     .message-assistant .bubble li { margin: 4px 0; }
     .message-assistant .bubble strong { font-weight: 600; }
     .message-assistant .bubble code {
-      background: var(--surface-elevated);
-      padding: 2px 6px; border-radius: 4px;
+      background: var(--code-bg);
+      padding: 2px 6px; border-radius: 5px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 13px; color: var(--secondary);
+      font-size: 13px; color: var(--accent);
     }
     .message-assistant .bubble pre {
-      background: var(--surface-elevated);
-      padding: 16px; border-radius: 10px;
+      background: var(--text);
+      padding: 16px; border-radius: 12px;
       overflow-x: auto; margin: 12px 0;
     }
     .message-assistant .bubble pre code {
       background: none; padding: 0;
-      font-size: 13px; color: var(--text-primary);
+      font-size: 13px; color: rgba(255,255,255,0.85);
     }
     .message-assistant .bubble blockquote {
-      border-left: 3px solid rgba(108,92,231,0.5);
+      border-left: 3px solid var(--accent);
       padding-left: 14px; margin: 12px 0;
-      color: var(--text-secondary);
+      color: var(--text-2);
     }
-    .msg-actions {
-      display: flex; gap: 6px; margin-top: 8px;
+    .message-assistant .bubble table {
+      border-collapse: collapse; width: 100%; margin: 12px 0;
     }
+    .message-assistant .bubble th,
+    .message-assistant .bubble td {
+      padding: 8px 12px; text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .message-assistant .bubble th {
+      font-weight: 600; color: var(--text-2);
+    }
+    .msg-actions { display: flex; gap: 6px; margin-top: 8px; }
     .msg-action {
       display: flex; align-items: center; gap: 4px;
       padding: 5px 10px;
       background: none; border: none;
-      color: var(--text-tertiary); font-size: 12px;
+      color: var(--text-3); font-size: 12px;
       cursor: pointer; border-radius: 8px;
       font-family: inherit;
       transition: color 0.2s, background 0.2s;
     }
-    .msg-action:hover { color: var(--primary); background: rgba(108,92,231,0.08); }
+    .msg-action:hover {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
 
     /* ── Agent Thinking ── */
     .thinking-card {
       padding: 20px;
-      background: var(--surface-card);
-      border: 1px solid rgba(108,92,231,0.2);
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 16px;
       margin-bottom: 16px;
-      animation: msgIn 0.3s ease;
+      animation: msgIn 0.35s var(--ease);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
-    .thinking-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .thinking-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px;
+    }
     .thinking-dot {
-      width: 10px; height: 10px;
-      background: var(--primary);
+      width: 8px; height: 8px;
+      background: var(--accent);
       border-radius: 50%;
       animation: thinkPulse 1.5s ease-in-out infinite;
-      box-shadow: 0 0 8px rgba(108,92,231,0.4);
     }
     @keyframes thinkPulse {
-      0%, 100% { transform: scale(0.8); opacity: 0.6; }
+      0%, 100% { transform: scale(0.8); opacity: 0.5; }
       50% { transform: scale(1.2); opacity: 1; }
     }
-    .thinking-label { font-size: 13px; font-weight: 600; color: var(--primary); }
+    .thinking-label {
+      font-size: 13px; font-weight: 600;
+      color: var(--accent);
+    }
     .thinking-step {
       display: flex; align-items: center; gap: 10px;
-      padding: 6px 0; font-size: 13px;
+      padding: 5px 0; font-size: 13px;
     }
     .thinking-step .dot {
       width: 6px; height: 6px; border-radius: 50%;
       flex-shrink: 0;
     }
-    .thinking-step.active .dot { background: var(--primary); }
-    .thinking-step.active .name { color: var(--text-secondary); }
-    .thinking-step.done .dot { background: var(--success); }
-    .thinking-step.done .name { color: var(--text-tertiary); }
-    .thinking-step .name { transition: color 0.3s; }
+    .thinking-step.active .dot { background: var(--accent); }
+    .thinking-step.active .name { color: var(--text-2); }
+    .thinking-step.done .dot { background: var(--green); }
+    .thinking-step.done .name { color: var(--text-3); }
+    .thinking-step .name { transition: color 0.3s; color: var(--text-3); }
     .thinking-dots {
       display: inline-flex; gap: 3px; margin-left: 4px;
     }
     .thinking-dots span {
       width: 4px; height: 4px;
-      background: var(--text-tertiary);
+      background: var(--text-3);
       border-radius: 50%;
       animation: dotBlink 1.2s ease-in-out infinite;
     }
@@ -297,27 +355,26 @@
     .reasoning-toggle {
       display: flex; align-items: center; gap: 6px;
       padding: 5px 10px;
-      background: rgba(108,92,231,0.08);
-      border: none; color: var(--primary);
+      background: var(--accent-soft);
+      border: none; color: var(--accent);
       font-size: 12px; cursor: pointer;
       border-radius: 8px; font-family: inherit;
       font-weight: 500;
       transition: background 0.2s;
     }
-    .reasoning-toggle:hover { background: rgba(108,92,231,0.15); }
+    .reasoning-toggle:hover { background: var(--accent-mid); }
     .reasoning-panel {
       display: none;
       margin-top: 12px;
       padding: 16px;
-      background: rgba(108,92,231,0.04);
+      background: var(--accent-soft);
       border-radius: 12px;
-      border: 1px solid rgba(108,92,231,0.1);
+      border: 1px solid rgba(67, 24, 255, 0.08);
     }
     .reasoning-panel.open { display: block; animation: msgIn 0.3s ease; }
     .reasoning-step {
       display: flex; gap: 10px;
-      padding: 8px 0;
-      font-size: 13px;
+      padding: 8px 0; font-size: 13px;
     }
     .reasoning-step .agent-dot {
       width: 8px; height: 8px;
@@ -329,94 +386,81 @@
       margin-bottom: 2px;
     }
     .reasoning-step .agent-text {
-      color: var(--text-secondary); line-height: 1.5;
+      color: var(--text-2); line-height: 1.5;
     }
 
     /* ── Mode Selector ── */
     .mode-bar {
       display: flex; justify-content: center;
       padding: 8px 16px;
-      gap: 8px;
-      flex-shrink: 0;
+      gap: 6px; flex-shrink: 0;
     }
     .mode-chip {
-      display: flex; align-items: center; gap: 6px;
-      padding: 9px 16px;
+      display: flex; align-items: center; gap: 0;
+      padding: 8px 16px;
       background: transparent;
       border: 1px solid var(--border);
       border-radius: 100px;
-      color: var(--text-secondary);
+      color: var(--text-3);
       font-size: 13px; font-weight: 500;
       cursor: pointer; font-family: inherit;
-      transition: all 0.25s ease;
+      transition: all 0.25s var(--ease);
     }
-    .mode-chip:hover { border-color: var(--text-tertiary); }
-    .mode-chip.active[data-mode="fast"] {
-      background: rgba(0,196,140,0.12);
-      border-color: rgba(0,196,140,0.4);
-      color: var(--success);
-      font-weight: 600;
-    }
-    .mode-chip.active[data-mode="smart"] {
-      background: rgba(108,92,231,0.12);
-      border-color: rgba(108,92,231,0.4);
-      color: var(--primary);
-      font-weight: 600;
-    }
-    .mode-chip.active[data-mode="deep"] {
-      background: rgba(0,210,255,0.12);
-      border-color: rgba(0,210,255,0.4);
-      color: var(--secondary);
+    .mode-chip:hover { border-color: var(--text-3); color: var(--text-2); }
+    .mode-chip.active {
+      background: var(--accent-soft);
+      border-color: rgba(67, 24, 255, 0.2);
+      color: var(--accent);
       font-weight: 600;
     }
 
     /* ── Input Bar ── */
     .input-bar {
-      display: flex; align-items: flex-end; gap: 12px;
-      padding: 12px 16px 16px;
-      border-top: 1px solid rgba(42,42,74,0.4);
+      display: flex; align-items: flex-end; gap: 10px;
+      padding: 12px 16px 20px;
       flex-shrink: 0;
-      background: var(--surface);
+      background: var(--bg);
     }
     .input-wrap {
       flex: 1;
-      background: var(--surface-card);
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 14px;
       display: flex; align-items: flex-end;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
       max-height: 120px;
     }
-    .input-wrap:focus-within { border-color: rgba(108,92,231,0.5); }
+    .input-wrap:focus-within {
+      border-color: rgba(67, 24, 255, 0.3);
+      box-shadow: 0 0 0 3px rgba(67, 24, 255, 0.06);
+    }
     .input-wrap textarea {
-      flex: 1; padding: 14px 18px;
+      flex: 1; padding: 13px 16px;
       background: transparent;
       border: none; outline: none;
-      color: white; font-size: 15px;
+      color: var(--text); font-size: 15px;
       font-family: inherit;
-      resize: none;
-      max-height: 100px;
+      resize: none; max-height: 100px;
       line-height: 1.4;
     }
-    .input-wrap textarea::placeholder { color: var(--text-tertiary); }
+    .input-wrap textarea::placeholder { color: var(--text-3); }
     .send-btn {
-      width: 48px; height: 48px;
-      background: linear-gradient(135deg, #6C5CE7, #00D2FF);
+      width: 46px; height: 46px;
+      background: var(--text);
       border: none; border-radius: 14px;
-      color: white; font-size: 20px;
-      cursor: pointer;
+      color: white; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: opacity 0.2s, transform 0.15s;
+      transition: background 0.3s, transform 0.15s;
       flex-shrink: 0;
     }
-    .send-btn:hover { opacity: 0.9; transform: scale(1.03); }
-    .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-    .send-btn svg { width: 20px; height: 20px; }
+    .send-btn:hover { background: var(--accent); transform: scale(1.03); }
+    .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+    .send-btn svg { width: 18px; height: 18px; }
 
     /* ── Sidebar ── */
     .sidebar-overlay {
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.2);
       z-index: 200;
       opacity: 0; pointer-events: none;
       transition: opacity 0.3s;
@@ -425,90 +469,96 @@
     .sidebar {
       position: fixed; top: 0; left: 0; bottom: 0;
       width: 300px; max-width: 85vw;
-      background: var(--surface-card);
+      background: var(--surface);
       border-right: 1px solid var(--border);
       z-index: 201;
       transform: translateX(-100%);
-      transition: transform 0.3s ease;
+      transition: transform 0.35s var(--ease);
       display: flex; flex-direction: column;
     }
     .sidebar.open { transform: translateX(0); }
     .sidebar-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px;
+      padding: 16px 20px; height: 56px;
       border-bottom: 1px solid var(--border);
     }
-    .sidebar-header h3 { font-size: 16px; font-weight: 700; }
-    .sidebar-close {
-      background: none; border: none; color: var(--text-secondary);
-      font-size: 22px; cursor: pointer; padding: 4px;
+    .sidebar-header h3 {
+      font-size: 15px; font-weight: 700;
+      letter-spacing: -0.01em;
     }
+    .sidebar-close {
+      background: none; border: none;
+      color: var(--text-3);
+      font-size: 22px; cursor: pointer; padding: 4px;
+      transition: color 0.2s;
+    }
+    .sidebar-close:hover { color: var(--text); }
     .new-chat-btn {
       margin: 16px 16px 8px;
-      padding: 12px;
-      background: linear-gradient(135deg, #6C5CE7, #00D2FF);
+      padding: 11px;
+      background: var(--text);
       color: white; border: none;
       border-radius: 12px;
       font-size: 14px; font-weight: 600;
       cursor: pointer; font-family: inherit;
-      transition: opacity 0.2s;
+      transition: background 0.3s;
     }
-    .new-chat-btn:hover { opacity: 0.9; }
+    .new-chat-btn:hover { background: var(--accent); }
     .conv-list {
       flex: 1; overflow-y: auto;
       padding: 8px 12px;
     }
-    .conv-list::-webkit-scrollbar { width: 3px; }
-    .conv-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .conv-list::-webkit-scrollbar { width: 2px; }
+    .conv-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
     .conv-item {
       padding: 12px 14px;
       border-radius: 12px;
       cursor: pointer;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       transition: background 0.2s;
     }
-    .conv-item:hover { background: var(--surface-elevated); }
-    .conv-item.active { background: rgba(108,92,231,0.12); }
+    .conv-item:hover { background: var(--bg); }
+    .conv-item.active { background: var(--accent-soft); }
     .conv-item .conv-title {
       font-size: 13px; font-weight: 500;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis;
     }
     .conv-item .conv-time {
-      font-size: 11px; color: var(--text-tertiary); margin-top: 2px;
+      font-size: 11px; color: var(--text-3);
+      margin-top: 2px;
     }
     .sidebar-footer {
       padding: 16px;
       border-top: 1px solid var(--border);
     }
-    .sidebar-user {
-      display: flex; align-items: center; gap: 10px;
-    }
+    .sidebar-user { display: flex; align-items: center; gap: 10px; }
     .sidebar-avatar {
-      width: 36px; height: 36px;
-      background: var(--surface-elevated);
+      width: 34px; height: 34px;
+      background: var(--accent-soft);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700; color: var(--primary);
+      font-size: 13px; font-weight: 700; color: var(--accent);
     }
     .sidebar-name { font-size: 13px; font-weight: 600; }
-    .sidebar-email { font-size: 11px; color: var(--text-tertiary); }
+    .sidebar-email { font-size: 11px; color: var(--text-3); }
     .logout-btn {
       margin-top: 12px; width: 100%;
       padding: 10px;
-      background: rgba(255,71,87,0.08);
-      border: 1px solid rgba(255,71,87,0.2);
+      background: transparent;
+      border: 1px solid var(--border);
       border-radius: 10px;
-      color: var(--error); font-size: 13px;
+      color: var(--red); font-size: 13px;
       font-weight: 500; cursor: pointer;
       font-family: inherit;
       transition: background 0.2s;
     }
-    .logout-btn:hover { background: rgba(255,71,87,0.15); }
+    .logout-btn:hover { background: rgba(239, 68, 68, 0.04); }
 
-    /* ── Settings Panel ── */
+    /* ── Settings ── */
     .settings-overlay {
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.2);
       z-index: 200;
       opacity: 0; pointer-events: none;
       transition: opacity 0.3s;
@@ -517,65 +567,68 @@
     .settings-panel {
       position: fixed; top: 0; right: 0; bottom: 0;
       width: 360px; max-width: 90vw;
-      background: var(--surface-card);
+      background: var(--surface);
       border-left: 1px solid var(--border);
       z-index: 201;
       transform: translateX(100%);
-      transition: transform 0.3s ease;
+      transition: transform 0.35s var(--ease);
       display: flex; flex-direction: column;
       overflow-y: auto;
     }
     .settings-panel.open { transform: translateX(0); }
     .settings-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px;
+      padding: 16px 20px; height: 56px;
       border-bottom: 1px solid var(--border);
     }
-    .settings-header h3 { font-size: 16px; font-weight: 700; }
+    .settings-header h3 {
+      font-size: 15px; font-weight: 700;
+      letter-spacing: -0.01em;
+    }
     .settings-section { padding: 20px; }
     .settings-label {
       font-size: 11px; font-weight: 600;
-      color: var(--text-tertiary);
+      color: var(--text-3);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.08em;
       margin-bottom: 12px;
     }
     .settings-item {
       display: flex; align-items: center; gap: 12px;
-      padding: 14px 16px;
-      background: var(--surface);
+      padding: 13px 16px;
+      background: var(--bg);
+      border: 1px solid transparent;
       border-radius: 14px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: border-color 0.2s;
     }
-    .settings-item:hover { background: var(--surface-elevated); }
+    .settings-item:hover { border-color: var(--border); }
     .settings-item .icon {
-      width: 36px; height: 36px;
+      width: 34px; height: 34px;
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
+      font-size: 15px; flex-shrink: 0;
+      background: var(--accent-soft);
     }
     .settings-item .info { flex: 1; }
     .settings-item .info .label { font-size: 14px; font-weight: 500; }
-    .settings-item .info .desc { font-size: 12px; color: var(--text-tertiary); }
-    .settings-item .chevron { color: var(--text-tertiary); font-size: 14px; }
-    .lang-options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .settings-item .info .desc { font-size: 12px; color: var(--text-3); }
+    .lang-options { display: flex; gap: 6px; flex-wrap: wrap; }
     .lang-btn {
       padding: 10px 18px;
-      background: var(--surface);
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 12px;
-      color: var(--text-secondary);
+      color: var(--text-2);
       font-size: 13px; font-weight: 500;
       cursor: pointer; font-family: inherit;
       transition: all 0.2s;
     }
     .lang-btn.active {
-      background: rgba(108,92,231,0.12);
-      border-color: rgba(108,92,231,0.4);
-      color: var(--primary); font-weight: 600;
+      background: var(--accent-soft);
+      border-color: rgba(67, 24, 255, 0.2);
+      color: var(--accent); font-weight: 600;
     }
 
     /* ── Responsive ── */
@@ -587,14 +640,12 @@
 </head>
 <body>
 
-<!-- ════════════ AUTH ════════════ -->
+<!-- ═══ AUTH ═══ -->
 <div class="auth-screen" id="authScreen">
   <div class="auth-card">
     <div class="auth-logo">O</div>
     <h1>Orka AI</h1>
     <p class="tagline">Koordinierte Intelligenz</p>
-
-    <!-- Login -->
     <div id="loginForm">
       <input class="auth-field" type="email" id="loginEmail" placeholder="E-Mail-Adresse" autocomplete="email">
       <input class="auth-field" type="password" id="loginPassword" placeholder="Passwort" autocomplete="current-password">
@@ -602,8 +653,6 @@
       <div class="auth-error" id="loginError"></div>
       <p class="auth-toggle">Noch kein Konto? <a onclick="showRegister()">Registrieren</a></p>
     </div>
-
-    <!-- Register -->
     <div id="registerForm" style="display:none">
       <input class="auth-field" type="text" id="regName" placeholder="Dein Name" autocomplete="name">
       <input class="auth-field" type="email" id="regEmail" placeholder="E-Mail-Adresse" autocomplete="email">
@@ -615,10 +664,9 @@
   </div>
 </div>
 
-<!-- ════════════ APP ════════════ -->
+<!-- ═══ APP ═══ -->
 <div class="app" id="appShell">
 
-  <!-- Sidebar Overlay -->
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -639,7 +687,6 @@
     </div>
   </div>
 
-  <!-- Settings Overlay -->
   <div class="settings-overlay" id="settingsOverlay" onclick="closeSettings()"></div>
   <div class="settings-panel" id="settingsPanel">
     <div class="settings-header">
@@ -649,48 +696,47 @@
     <div class="settings-section">
       <div class="settings-label">Sprache</div>
       <div class="lang-options">
-        <button class="lang-btn active" onclick="setLang(this,'de')">🇩🇪 Deutsch</button>
-        <button class="lang-btn" onclick="setLang(this,'en')">🇬🇧 English</button>
-        <button class="lang-btn" onclick="setLang(this,'ar')">🇸🇦 العربية</button>
+        <button class="lang-btn active" onclick="setLang(this,'de')">Deutsch</button>
+        <button class="lang-btn" onclick="setLang(this,'en')">English</button>
+        <button class="lang-btn" onclick="setLang(this,'ar')">العربية</button>
       </div>
     </div>
     <div class="settings-section">
       <div class="settings-label">Standard-Modus</div>
       <div class="settings-item" onclick="setDefaultMode('fast')">
-        <div class="icon" style="background:rgba(0,196,140,0.1)">⚡</div>
+        <div class="icon">S</div>
         <div class="info"><div class="label">Schnell</div><div class="desc">2 Agenten · ~3 Sek</div></div>
       </div>
       <div class="settings-item" onclick="setDefaultMode('smart')">
-        <div class="icon" style="background:rgba(108,92,231,0.1)">🧠</div>
+        <div class="icon">M</div>
         <div class="info"><div class="label">Smart</div><div class="desc">5 Agenten · ~8 Sek</div></div>
       </div>
       <div class="settings-item" onclick="setDefaultMode('deep')">
-        <div class="icon" style="background:rgba(0,210,255,0.1)">🔬</div>
+        <div class="icon">T</div>
         <div class="info"><div class="label">Tief</div><div class="desc">6+ Agenten · ~20 Sek</div></div>
       </div>
     </div>
     <div class="settings-section">
       <div class="settings-label">Konto</div>
       <div class="settings-item">
-        <div class="icon" style="background:rgba(108,92,231,0.1)">👤</div>
+        <div class="icon">K</div>
         <div class="info"><div class="label" id="settingsUserName">—</div><div class="desc" id="settingsUserEmail">—</div></div>
       </div>
     </div>
     <div class="settings-section">
       <div class="settings-label">Info</div>
       <div class="settings-item">
-        <div class="icon" style="background:rgba(108,92,231,0.1)">ℹ️</div>
+        <div class="icon">i</div>
         <div class="info"><div class="label">Version</div><div class="desc">1.0.0 — MVP</div></div>
       </div>
     </div>
   </div>
 
-  <!-- Top Bar -->
   <div class="topbar">
     <div class="topbar-left">
       <button class="topbar-btn" onclick="openSidebar()" title="Gespräche">☰</button>
       <div class="topbar-logo">O</div>
-      <span class="topbar-title">Orka AI</span>
+      <span class="topbar-title">Orka</span>
     </div>
     <div class="topbar-right">
       <button class="topbar-btn" onclick="newConversation()" title="Neues Gespräch">✎</button>
@@ -698,30 +744,29 @@
     </div>
   </div>
 
-  <!-- Chat -->
   <div class="chat-area" id="chatArea">
     <div class="empty-state" id="emptyState">
-      <div class="empty-icon">🧠</div>
+      <div class="empty-icon"><div class="dot"></div></div>
       <h2>Wie kann ich helfen?</h2>
-      <p>Multiple KI-Agenten arbeiten zusammen, um dir die bestmögliche Antwort zu liefern.</p>
+      <p>Sechs KI-Agenten arbeiten zusammen für Antworten auf einem neuen Level.</p>
       <div class="suggestions">
         <div class="suggestion" onclick="useSuggestion(this)">
-          <span class="emoji">✍️</span>
+          <span class="marker"></span>
           <span class="text">Schreibe einen überzeugenden LinkedIn-Post über KI im Alltag</span>
           <span class="arrow">›</span>
         </div>
         <div class="suggestion" onclick="useSuggestion(this)">
-          <span class="emoji">📊</span>
+          <span class="marker"></span>
           <span class="text">Analysiere Vor- und Nachteile von Remote-Arbeit für Startups</span>
           <span class="arrow">›</span>
         </div>
         <div class="suggestion" onclick="useSuggestion(this)">
-          <span class="emoji">💡</span>
+          <span class="marker"></span>
           <span class="text">Erkläre Quantencomputing einfach und verständlich</span>
           <span class="arrow">›</span>
         </div>
         <div class="suggestion" onclick="useSuggestion(this)">
-          <span class="emoji">🚀</span>
+          <span class="marker"></span>
           <span class="text">Erstelle einen Businessplan für eine nachhaltige App-Idee</span>
           <span class="arrow">›</span>
         </div>
@@ -730,17 +775,15 @@
     <div id="messagesContainer"></div>
   </div>
 
-  <!-- Mode Selector -->
   <div class="mode-bar">
-    <button class="mode-chip" data-mode="fast" onclick="setMode('fast')">⚡ Schnell</button>
-    <button class="mode-chip active" data-mode="smart" onclick="setMode('smart')">🧠 Smart</button>
-    <button class="mode-chip" data-mode="deep" onclick="setMode('deep')">🔬 Tief</button>
+    <button class="mode-chip" data-mode="fast" onclick="setMode('fast')">Schnell</button>
+    <button class="mode-chip active" data-mode="smart" onclick="setMode('smart')">Smart</button>
+    <button class="mode-chip" data-mode="deep" onclick="setMode('deep')">Tief</button>
   </div>
 
-  <!-- Input -->
   <div class="input-bar">
     <div class="input-wrap">
-      <textarea id="msgInput" rows="1" placeholder="Schreibe eine Nachricht..." onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
+      <textarea id="msgInput" rows="1" placeholder="Nachricht eingeben …" onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
     </div>
     <button class="send-btn" id="sendBtn" onclick="sendMessage()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -749,9 +792,6 @@
 </div>
 
 <script>
-// ═══════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════
 let currentUser = null;
 let currentMode = 'smart';
 let conversations = [];
@@ -760,35 +800,29 @@ let isGenerating = false;
 
 const AGENTS = {
   fast: [
-    { id: 'analyst', name: 'Analyst', color: 'var(--agent-analyst)' },
-    { id: 'synthesizer', name: 'Synthesizer', color: 'var(--agent-synthesizer)' }
+    { id: 'analyst', name: 'Analyst', color: '#4318FF' },
+    { id: 'synthesizer', name: 'Synthesizer', color: '#22C55E' }
   ],
   smart: [
-    { id: 'analyst', name: 'Analyst', color: 'var(--agent-analyst)' },
-    { id: 'researcher', name: 'Researcher', color: 'var(--agent-researcher)' },
-    { id: 'creative', name: 'Creative', color: 'var(--agent-creative)' },
-    { id: 'critic', name: 'Critic', color: 'var(--agent-critic)' },
-    { id: 'synthesizer', name: 'Synthesizer', color: 'var(--agent-synthesizer)' }
+    { id: 'analyst', name: 'Analyst', color: '#4318FF' },
+    { id: 'researcher', name: 'Researcher', color: '#0EA5E9' },
+    { id: 'creative', name: 'Creative', color: '#8B5CF6' },
+    { id: 'critic', name: 'Critic', color: '#EF4444' },
+    { id: 'synthesizer', name: 'Synthesizer', color: '#22C55E' }
   ],
   deep: [
-    { id: 'analyst', name: 'Analyst', color: 'var(--agent-analyst)' },
-    { id: 'researcher', name: 'Researcher', color: 'var(--agent-researcher)' },
-    { id: 'creative', name: 'Creative', color: 'var(--agent-creative)' },
-    { id: 'critic', name: 'Critic', color: 'var(--agent-critic)' },
-    { id: 'synthesizer', name: 'Synthesizer', color: 'var(--agent-synthesizer)' },
-    { id: 'judge', name: 'Quality Judge', color: 'var(--agent-judge)' }
+    { id: 'analyst', name: 'Analyst', color: '#4318FF' },
+    { id: 'researcher', name: 'Researcher', color: '#0EA5E9' },
+    { id: 'creative', name: 'Creative', color: '#8B5CF6' },
+    { id: 'critic', name: 'Critic', color: '#EF4444' },
+    { id: 'synthesizer', name: 'Synthesizer', color: '#22C55E' },
+    { id: 'judge', name: 'Quality Judge', color: '#F59E0B' }
   ]
 };
 
-// ═══════════════════════════════════════
-// AUTH
-// ═══════════════════════════════════════
 function loadUser() {
   const u = localStorage.getItem('orka_user');
-  if (u) {
-    currentUser = JSON.parse(u);
-    showApp();
-  }
+  if (u) { currentUser = JSON.parse(u); showApp(); }
 }
 
 function handleLogin() {
@@ -796,11 +830,9 @@ function handleLogin() {
   const pw = document.getElementById('loginPassword').value;
   if (!email || !pw) return showError('loginError', 'Bitte alle Felder ausfüllen.');
   if (pw.length < 6) return showError('loginError', 'Passwort mindestens 6 Zeichen.');
-
   const users = JSON.parse(localStorage.getItem('orka_users') || '{}');
   if (!users[email]) return showError('loginError', 'Konto nicht gefunden. Bitte registrieren.');
   if (users[email].password !== pw) return showError('loginError', 'Falsches Passwort.');
-
   currentUser = { name: users[email].name, email };
   localStorage.setItem('orka_user', JSON.stringify(currentUser));
   showApp();
@@ -813,13 +845,10 @@ function handleRegister() {
   if (!name || !email || !pw) return showError('regError', 'Bitte alle Felder ausfüllen.');
   if (pw.length < 6) return showError('regError', 'Passwort mindestens 6 Zeichen.');
   if (!email.includes('@')) return showError('regError', 'Ungültige E-Mail-Adresse.');
-
   const users = JSON.parse(localStorage.getItem('orka_users') || '{}');
   if (users[email]) return showError('regError', 'E-Mail bereits registriert.');
-
   users[email] = { name, password: pw };
   localStorage.setItem('orka_users', JSON.stringify(users));
-
   currentUser = { name, email };
   localStorage.setItem('orka_user', JSON.stringify(currentUser));
   showApp();
@@ -860,9 +889,6 @@ function showApp() {
   document.getElementById('msgInput').focus();
 }
 
-// ═══════════════════════════════════════
-// CONVERSATIONS
-// ═══════════════════════════════════════
 function loadConversations() {
   conversations = JSON.parse(localStorage.getItem('orka_convs_' + currentUser.email) || '[]');
   renderConvList();
@@ -925,9 +951,6 @@ function getOrCreateConv(firstMsg) {
   return conv;
 }
 
-// ═══════════════════════════════════════
-// CHAT
-// ═══════════════════════════════════════
 function useSuggestion(el) {
   const text = el.querySelector('.text').textContent;
   document.getElementById('msgInput').value = text;
@@ -947,54 +970,36 @@ async function sendMessage() {
   const input = document.getElementById('msgInput');
   const content = input.value.trim();
   if (!content || isGenerating) return;
-
   isGenerating = true;
   document.getElementById('sendBtn').disabled = true;
-
-  // Hide empty state
   document.getElementById('emptyState').style.display = 'none';
-
-  // Get/create conversation
   const conv = getOrCreateConv(content);
   conv.messages.push({ role: 'user', content });
   saveConversations();
-
-  // Show user message
   addUserBubble(content);
   input.value = ''; input.style.height = 'auto';
   scrollToBottom();
-
-  // Show agent thinking
   const thinkingEl = showThinking();
   scrollToBottom();
-
-  // Simulate multi-agent orchestration
   const agents = AGENTS[currentMode];
   const reasoning = [];
-
   for (let i = 0; i < agents.length; i++) {
     updateThinking(thinkingEl, agents, i);
     scrollToBottom();
     const delay = currentMode === 'fast' ? 800 : currentMode === 'deep' ? 2000 : 1200;
     await sleep(delay + Math.random() * 600);
     reasoning.push({
-      agent: agents[i].id,
-      name: agents[i].name,
+      agent: agents[i].id, name: agents[i].name,
       color: agents[i].color,
       summary: getAgentSummary(agents[i].id, content)
     });
   }
-
-  // Remove thinking, generate response
   thinkingEl.remove();
-
   const response = await generateResponse(content, currentMode, reasoning);
   conv.messages.push({ role: 'assistant', content: response, reasoning });
   saveConversations();
-
   addAssistantBubble(response, reasoning);
   scrollToBottom();
-
   isGenerating = false;
   document.getElementById('sendBtn').disabled = false;
   document.getElementById('msgInput').focus();
@@ -1012,15 +1017,13 @@ function addAssistantBubble(content, reasoning) {
   const container = document.getElementById('messagesContainer');
   const div = document.createElement('div');
   div.className = 'message message-assistant';
-
   const renderedContent = typeof marked !== 'undefined' ? marked.parse(content) : escapeHtml(content);
   const reasoningId = 'reason_' + Date.now() + Math.random().toString(36).substr(2,4);
-
   let reasoningHtml = '';
   if (reasoning && reasoning.length > 0) {
     reasoningHtml = `
       <button class="reasoning-toggle" onclick="toggleReasoning('${reasoningId}')">
-        🧠 Denkprozess anzeigen
+        Denkprozess anzeigen
       </button>
       <div class="reasoning-panel" id="${reasoningId}">
         ${reasoning.map(r => `
@@ -1035,11 +1038,10 @@ function addAssistantBubble(content, reasoning) {
       </div>
     `;
   }
-
   div.innerHTML = `
     <div class="bubble">${renderedContent}</div>
     <div class="msg-actions">
-      <button class="msg-action" onclick="copyMessage(this)">📋 Kopieren</button>
+      <button class="msg-action" onclick="copyMessage(this)">Kopieren</button>
       ${reasoningHtml}
     </div>
   `;
@@ -1054,13 +1056,10 @@ function copyMessage(btn) {
   const bubble = btn.closest('.message-assistant').querySelector('.bubble');
   navigator.clipboard.writeText(bubble.textContent).then(() => {
     btn.textContent = '✓ Kopiert';
-    setTimeout(() => btn.textContent = '📋 Kopieren', 2000);
+    setTimeout(() => btn.textContent = 'Kopieren', 2000);
   });
 }
 
-// ═══════════════════════════════════════
-// THINKING INDICATOR
-// ═══════════════════════════════════════
 function showThinking() {
   const container = document.getElementById('messagesContainer');
   const div = document.createElement('div');
@@ -1080,30 +1079,23 @@ function updateThinking(el, agents, currentIdx) {
   const stepsEl = el.querySelector('.thinking-steps');
   stepsEl.innerHTML = agents.map((a, i) => {
     if (i < currentIdx) {
-      return `<div class="thinking-step done"><div class="dot" style="background:var(--success)"></div><span class="name">${a.name} ✓</span></div>`;
+      return `<div class="thinking-step done"><div class="dot" style="background:var(--green)"></div><span class="name">${a.name} ✓</span></div>`;
     } else if (i === currentIdx) {
       return `<div class="thinking-step active"><div class="dot" style="background:${a.color}"></div><span class="name">${a.name}</span><div class="thinking-dots"><span></span><span></span><span></span></div></div>`;
     } else {
-      return `<div class="thinking-step"><div class="dot" style="background:var(--border)"></div><span class="name" style="color:var(--text-tertiary)">${a.name}</span></div>`;
+      return `<div class="thinking-step"><div class="dot" style="background:var(--border)"></div><span class="name">${a.name}</span></div>`;
     }
   }).join('');
 }
 
-// ═══════════════════════════════════════
-// AI RESPONSE GENERATION
-// ═══════════════════════════════════════
 async function generateResponse(prompt, mode, reasoning) {
-  // This generates a high-quality response locally.
-  // When backend is deployed, replace with API call.
-  const responses = getSmartResponse(prompt, mode);
-  return responses;
+  return getSmartResponse(prompt, mode);
 }
 
 function getSmartResponse(prompt, mode) {
   const lower = prompt.toLowerCase();
   const modeLabel = mode === 'fast' ? 'Schnell' : mode === 'deep' ? 'Tief' : 'Smart';
 
-  // Context-aware responses
   if (lower.includes('linkedin') || lower.includes('post')) {
     return `## LinkedIn-Post: KI im Alltag
 
@@ -1111,7 +1103,7 @@ function getSmartResponse(prompt, mode) {
 
 ---
 
-🤖 **Die Zukunft der KI ist nicht ein Modell — sondern Orchestrierung.**
+**Die Zukunft der KI ist nicht ein Modell — sondern Orchestrierung.**
 
 Bei Orka AI haben wir etwas Neues gebaut: Statt einer einzelnen KI arbeiten **6 spezialisierte Agenten** zusammen:
 
@@ -1195,13 +1187,13 @@ Jetzt stell dir vor, der Schalter könnte **gleichzeitig An UND Aus** sein. Das 
 
 ### Die drei Superkräfte
 
-**1. Superposition** 🌀
+**1. Superposition**
 Ein Qubit kann 0, 1 oder beides gleichzeitig sein. Wie eine Münze, die sich dreht — sie ist gleichzeitig Kopf und Zahl, bis sie landet.
 
-**2. Verschränkung** 🔗
+**2. Verschränkung**
 Zwei Qubits können "verbunden" sein. Ändert sich einer, ändert sich der andere sofort — egal wie weit entfernt. Einstein nannte das *"spukhafte Fernwirkung"*.
 
-**3. Interferenz** 〰️
+**3. Interferenz**
 Quantencomputer können falsche Antworten auslöschen und richtige verstärken — wie Wellen, die sich gegenseitig aufheben oder verstärken.
 
 ### Wofür ist das gut?
@@ -1215,10 +1207,6 @@ Quantencomputer können falsche Antworten auslöschen und richtige verstärken �
 
 ### Wofür ist es NICHT gut?
 
-- Netflix schauen ❌
-- E-Mails schreiben ❌
-- Normale Alltagsaufgaben ❌
-
 Quantencomputer lösen **spezifische, extrem komplexe Probleme** schneller. Sie ersetzen normale Computer nicht — sie ergänzen sie.
 
 ### Wo stehen wir heute?
@@ -1229,7 +1217,7 @@ Quantencomputer lösen **spezifische, extrem komplexe Probleme** schneller. Sie 
   if (lower.includes('business') || lower.includes('plan') || lower.includes('app-idee') || lower.includes('startup')) {
     return `## Businessplan: Nachhaltige App-Idee
 
-### 🌱 Konzept: "GreenLoop"
+### Konzept: "GreenLoop"
 **Eine App, die nachhaltigen Konsum spielerisch einfach macht.**
 
 ---
@@ -1245,11 +1233,11 @@ Quantencomputer lösen **spezifische, extrem komplexe Probleme** schneller. Sie 
 ### 2. Lösung
 
 **GreenLoop** macht Nachhaltigkeit messbar, belohnend und sozial:
-- 📸 **Scan & Score**: Produkte scannen, sofort Nachhaltigkeits-Score sehen
-- 🎯 **Tägliche Challenges**: Kleine Aktionen mit großer Wirkung
-- 🏆 **Gamification**: Punkte, Streaks, Levels, Belohnungen
-- 👥 **Community**: Teams bilden, gemeinsam CO₂ sparen
-- 💚 **Impact-Dashboard**: Zeigt deinen persönlichen Beitrag
+- **Scan & Score**: Produkte scannen, sofort Nachhaltigkeits-Score sehen
+- **Tägliche Challenges**: Kleine Aktionen mit großer Wirkung
+- **Gamification**: Punkte, Streaks, Levels, Belohnungen
+- **Community**: Teams bilden, gemeinsam CO2 sparen
+- **Impact-Dashboard**: Zeigt deinen persönlichen Beitrag
 
 ### 3. Markt
 
@@ -1285,10 +1273,10 @@ Quantencomputer lösen **spezifische, extrem komplexe Probleme** schneller. Sie 
 | Break-even | Monat 14 |
 
 ### 7. Team-Bedarf
-- 1× Fullstack Developer
-- 1× UI/UX Designer
-- 1× Marketing / Growth
-- 1× CEO / Product
+- 1x Fullstack Developer
+- 1x UI/UX Designer
+- 1x Marketing / Growth
+- 1x CEO / Product
 
 ### 8. Nächste Schritte
 1. MVP in 8 Wochen bauen
@@ -1300,7 +1288,6 @@ Quantencomputer lösen **spezifische, extrem komplexe Probleme** schneller. Sie 
 > *"Nachhaltigkeit sollte sich nicht wie Verzicht anfühlen — sondern wie ein Spiel, das man gewinnen will."*`;
   }
 
-  // Default intelligent response
   return `## Antwort
 
 ${generateContextualResponse(prompt, mode)}
@@ -1311,9 +1298,7 @@ ${generateContextualResponse(prompt, mode)}
 }
 
 function generateContextualResponse(prompt, mode) {
-  const words = prompt.split(/\s+/);
   const isQuestion = prompt.includes('?');
-  const isCommand = prompt.toLowerCase().startsWith('erstell') || prompt.toLowerCase().startsWith('schreib') || prompt.toLowerCase().startsWith('erkl');
 
   if (isQuestion) {
     return `Das ist eine ausgezeichnete Frage. Hier ist meine Analyse:
@@ -1368,9 +1353,6 @@ function getAgentSummary(agentId, prompt) {
   return summaries[agentId] || 'Verarbeitung abgeschlossen.';
 }
 
-// ═══════════════════════════════════════
-// UI HELPERS
-// ═══════════════════════════════════════
 function setMode(mode) {
   currentMode = mode;
   document.querySelectorAll('.mode-chip').forEach(c => {
@@ -1378,14 +1360,11 @@ function setMode(mode) {
   });
 }
 
-function setDefaultMode(mode) {
-  setMode(mode);
-}
+function setDefaultMode(mode) { setMode(mode); }
 
 function setLang(btn, code) {
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  // Future: update UI language
 }
 
 function openSidebar() {
@@ -1416,13 +1395,8 @@ function escapeHtml(str) {
   return d.innerHTML;
 }
 
-function sleep(ms) {
-  return new Promise(r => setTimeout(r, ms));
-}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ═══════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════
 loadUser();
 </script>
 
