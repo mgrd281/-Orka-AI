@@ -979,26 +979,59 @@ async function sendMessage() {
   addUserBubble(content);
   input.value = ''; input.style.height = 'auto';
   scrollToBottom();
+
   const thinkingEl = showThinking();
   scrollToBottom();
   const agents = AGENTS[currentMode];
-  const reasoning = [];
-  for (let i = 0; i < agents.length; i++) {
-    updateThinking(thinkingEl, agents, i);
-    scrollToBottom();
-    const delay = currentMode === 'fast' ? 800 : currentMode === 'deep' ? 2000 : 1200;
-    await sleep(delay + Math.random() * 600);
-    reasoning.push({
-      agent: agents[i].id, name: agents[i].name,
-      color: agents[i].color,
-      summary: getAgentSummary(agents[i].id, content)
+
+  // Start thinking animation
+  let thinkIdx = 0;
+  const thinkInterval = setInterval(() => {
+    if (thinkIdx < agents.length) {
+      updateThinking(thinkingEl, agents, thinkIdx);
+      scrollToBottom();
+      thinkIdx++;
+    }
+  }, currentMode === 'fast' ? 1000 : currentMode === 'deep' ? 2500 : 1500);
+
+  try {
+    // Call real API
+    const history = conv.messages.slice(-10);
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: content, mode: currentMode, history })
     });
+
+    clearInterval(thinkInterval);
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Serverfehler');
+    }
+
+    const data = await res.json();
+
+    // Map reasoning with agent colors
+    const reasoning = (data.reasoning || []).map(r => {
+      const agentDef = agents.find(a => a.id === r.agent);
+      return { ...r, color: agentDef ? agentDef.color : '#4318FF' };
+    });
+
+    thinkingEl.remove();
+    conv.messages.push({ role: 'assistant', content: data.response, reasoning });
+    saveConversations();
+    addAssistantBubble(data.response, reasoning);
+
+  } catch (err) {
+    clearInterval(thinkInterval);
+    thinkingEl.remove();
+    const errMsg = '**Fehler:** ' + (err.message || 'Verbindung fehlgeschlagen. Bitte versuche es erneut.');
+    conv.messages.push({ role: 'assistant', content: errMsg, reasoning: [] });
+    saveConversations();
+    addAssistantBubble(errMsg, []);
   }
-  thinkingEl.remove();
-  const response = await generateResponse(content, currentMode, reasoning);
-  conv.messages.push({ role: 'assistant', content: response, reasoning });
-  saveConversations();
-  addAssistantBubble(response, reasoning);
+
   scrollToBottom();
   isGenerating = false;
   document.getElementById('sendBtn').disabled = false;
@@ -1086,271 +1119,6 @@ function updateThinking(el, agents, currentIdx) {
       return `<div class="thinking-step"><div class="dot" style="background:var(--border)"></div><span class="name">${a.name}</span></div>`;
     }
   }).join('');
-}
-
-async function generateResponse(prompt, mode, reasoning) {
-  return getSmartResponse(prompt, mode);
-}
-
-function getSmartResponse(prompt, mode) {
-  const lower = prompt.toLowerCase();
-  const modeLabel = mode === 'fast' ? 'Schnell' : mode === 'deep' ? 'Tief' : 'Smart';
-
-  if (lower.includes('linkedin') || lower.includes('post')) {
-    return `## LinkedIn-Post: KI im Alltag
-
-**Hook:** Die meisten Menschen nutzen KI falsch. Sie stellen eine Frage und akzeptieren die erste Antwort. Aber was, wenn ein ganzes Team von KI-Experten zusammenarbeitet?
-
----
-
-**Die Zukunft der KI ist nicht ein Modell — sondern Orchestrierung.**
-
-Bei Orka AI haben wir etwas Neues gebaut: Statt einer einzelnen KI arbeiten **6 spezialisierte Agenten** zusammen:
-
-→ Der **Analyst** zerlegt dein Problem
-→ Der **Researcher** findet die besten Daten
-→ Der **Creative** denkt quer
-→ Der **Critic** hinterfragt alles
-→ Der **Synthesizer** baut die finale Antwort
-→ Der **Judge** prüft die Qualität
-
-Das Ergebnis? Antworten, die sich anfühlen, als hätte ein ganzes Beraterteam daran gearbeitet.
-
-**3 Takeaways:**
-1. Einzelne KI-Modelle haben blinde Flecken — Teams nicht
-2. Kritisches Denken in der KI-Pipeline erhöht die Qualität um ein Vielfaches
-3. Die Zukunft gehört orchestrierten Systemen
-
-Was denkst du — wird Multi-Agent AI der neue Standard?
-
-#KI #AI #Innovation #Technologie #Zukunft
-
----
-*Erstellt im ${modeLabel}-Modus mit ${mode === 'fast' ? '2' : mode === 'deep' ? '6' : '5'} Agenten.*`;
-  }
-
-  if (lower.includes('remote') || lower.includes('arbeit') || lower.includes('homeoffice')) {
-    return `## Analyse: Remote-Arbeit für Startups
-
-### Vorteile
-
-**1. Talentpool ohne Grenzen**
-Startups können weltweit die besten Talente einstellen, unabhängig vom Standort. Das ist besonders wertvoll für spezialisierte Rollen in KI, Engineering oder Design.
-
-**2. Kostenreduktion**
-- Keine Bürokosten (Miete, Ausstattung, Nebenkosten)
-- Geringere Fixkosten in der kritischen Frühphase
-- Mitarbeiter sparen Pendelzeit und -kosten
-
-**3. Produktivität**
-Studien zeigen: Remote-Mitarbeiter arbeiten im Schnitt **13% produktiver** (Stanford, 2023). Weniger Ablenkungen, weniger Meetings, mehr Deep Work.
-
-**4. Skalierbarkeit**
-Teams können schnell wachsen, ohne physische Infrastruktur aufbauen zu müssen.
-
-### Nachteile
-
-**1. Kultur-Aufbau**
-Startup-Kultur lebt von Energie, spontanen Gesprächen und gemeinsamen Erlebnissen. Remote macht das deutlich schwieriger.
-
-**2. Kommunikations-Overhead**
-- Asynchrone Kommunikation erfordert bessere Dokumentation
-- Missverständnisse häufen sich ohne nonverbale Signale
-- Onboarding neuer Mitarbeiter ist aufwändiger
-
-**3. Innovation leidet**
-Kreative Durchbrüche entstehen oft in ungeplanten Momenten — am Whiteboard, beim Kaffee, im Flur. Diese fehlen remote.
-
-**4. Führung wird komplexer**
-Manager müssen neue Skills entwickeln: Vertrauen statt Kontrolle, Ergebnisorientierung statt Anwesenheit.
-
-### Empfehlung
-
-**Hybrid-Modell** für die meisten Startups:
-- **2-3 Tage Remote** für Deep Work
-- **2-3 Tage vor Ort** für Zusammenarbeit und Kultur
-- **Vollständig remote** nur für hochspezialisierte oder verteilte Teams
-
-> *"Die besten Startups bauen nicht entweder remote oder vor Ort — sie bauen bewusst."*`;
-  }
-
-  if (lower.includes('quanten') || lower.includes('quantum')) {
-    return `## Quantencomputing — einfach erklärt
-
-### Was ist ein normaler Computer?
-
-Stell dir ein Lichtschalter vor: **An** oder **Aus**. Das ist ein **Bit** — die kleinste Informationseinheit. Dein Computer besteht aus Milliarden solcher Schalter, die blitzschnell zwischen 0 und 1 wechseln.
-
-### Was ist ein Quantencomputer?
-
-Jetzt stell dir vor, der Schalter könnte **gleichzeitig An UND Aus** sein. Das klingt verrückt, aber genau das passiert in der Quantenwelt. Diese Einheit heißt **Qubit**.
-
-### Die drei Superkräfte
-
-**1. Superposition**
-Ein Qubit kann 0, 1 oder beides gleichzeitig sein. Wie eine Münze, die sich dreht — sie ist gleichzeitig Kopf und Zahl, bis sie landet.
-
-**2. Verschränkung**
-Zwei Qubits können "verbunden" sein. Ändert sich einer, ändert sich der andere sofort — egal wie weit entfernt. Einstein nannte das *"spukhafte Fernwirkung"*.
-
-**3. Interferenz**
-Quantencomputer können falsche Antworten auslöschen und richtige verstärken — wie Wellen, die sich gegenseitig aufheben oder verstärken.
-
-### Wofür ist das gut?
-
-| Problem | Normaler PC | Quantencomputer |
-|---------|-------------|-----------------|
-| Medikamentenentwicklung | Jahre | Wochen |
-| Routenoptimierung | Gute Lösung | Beste Lösung |
-| Verschlüsselung knacken | Unmöglich | Machbar |
-| Materialforschung | Simulation begrenzt | Exakte Simulation |
-
-### Wofür ist es NICHT gut?
-
-Quantencomputer lösen **spezifische, extrem komplexe Probleme** schneller. Sie ersetzen normale Computer nicht — sie ergänzen sie.
-
-### Wo stehen wir heute?
-
-> Wir sind beim Quantencomputing ungefähr da, wo normale Computer in den **1950er-Jahren** waren — riesige Maschinen, experimentell, aber mit unglaublichem Potenzial.`;
-  }
-
-  if (lower.includes('business') || lower.includes('plan') || lower.includes('app-idee') || lower.includes('startup')) {
-    return `## Businessplan: Nachhaltige App-Idee
-
-### Konzept: "GreenLoop"
-**Eine App, die nachhaltigen Konsum spielerisch einfach macht.**
-
----
-
-### 1. Problem
-
-80% der Menschen wollen nachhaltiger leben, aber nur 20% tun es konsequent. Warum?
-- Zu kompliziert
-- Zu teuer (gefühlt)
-- Keine sofortige Belohnung
-- Überforderung durch Informationsflut
-
-### 2. Lösung
-
-**GreenLoop** macht Nachhaltigkeit messbar, belohnend und sozial:
-- **Scan & Score**: Produkte scannen, sofort Nachhaltigkeits-Score sehen
-- **Tägliche Challenges**: Kleine Aktionen mit großer Wirkung
-- **Gamification**: Punkte, Streaks, Levels, Belohnungen
-- **Community**: Teams bilden, gemeinsam CO2 sparen
-- **Impact-Dashboard**: Zeigt deinen persönlichen Beitrag
-
-### 3. Markt
-
-| Metrik | Wert |
-|--------|------|
-| TAM (Sustainability Apps) | €4.2 Mrd. (2026) |
-| SAM (DACH-Region) | €380 Mio. |
-| SOM (Jahr 1) | €3.8 Mio. |
-| Wachstum | 24% p.a. |
-
-### 4. Geschäftsmodell
-
-**Freemium + B2B:**
-- **Free**: Basis-Features, 3 Scans/Tag
-- **Premium (€4.99/mo)**: Unbegrenzt, detaillierte Analysen, exklusive Challenges
-- **B2B**: Unternehmen bieten GreenLoop als Mitarbeiter-Benefit an (€2/Mitarbeiter/mo)
-
-### 5. Go-to-Market
-
-**Phase 1 (Monat 1-3):** MVP mit Scan & Challenges, 1.000 Beta-Nutzer
-**Phase 2 (Monat 4-6):** Gamification, Community-Features, 10.000 Nutzer
-**Phase 3 (Monat 7-12):** B2B-Vertrieb, Partnerschaften, 50.000 Nutzer
-
-### 6. Finanzen (Jahr 1)
-
-| Position | Betrag |
-|----------|--------|
-| Entwicklung | €120.000 |
-| Marketing | €60.000 |
-| Betrieb | €40.000 |
-| **Gesamt** | **€220.000** |
-| Umsatz (Jahr 1) | €180.000 |
-| Break-even | Monat 14 |
-
-### 7. Team-Bedarf
-- 1x Fullstack Developer
-- 1x UI/UX Designer
-- 1x Marketing / Growth
-- 1x CEO / Product
-
-### 8. Nächste Schritte
-1. MVP in 8 Wochen bauen
-2. 100 Beta-Tester gewinnen
-3. Seed-Runde: €300.000 bei €1.5M Pre-Money
-4. Launch in DACH-Markt
-
----
-> *"Nachhaltigkeit sollte sich nicht wie Verzicht anfühlen — sondern wie ein Spiel, das man gewinnen will."*`;
-  }
-
-  return `## Antwort
-
-${generateContextualResponse(prompt, mode)}
-
----
-
-*Analysiert im **${modeLabel}**-Modus mit ${AGENTS[mode].length} Agenten.*`;
-}
-
-function generateContextualResponse(prompt, mode) {
-  const isQuestion = prompt.includes('?');
-
-  if (isQuestion) {
-    return `Das ist eine ausgezeichnete Frage. Hier ist meine Analyse:
-
-### Kernpunkte
-
-**1. Kontext**
-${prompt.length > 50 ? 'Diese Frage berührt mehrere Dimensionen, die eine differenzierte Betrachtung erfordern.' : 'Lass mich diese Frage präzise beantworten.'}
-
-**2. Analyse**
-Basierend auf der Zusammenarbeit von ${AGENTS[mode].length} spezialisierten Agenten ergibt sich folgendes Bild:
-
-- Der **Analyst** hat das Problem strukturiert und die Kernelemente identifiziert
-- Der **Researcher** hat relevante Informationen und Daten zusammengetragen
-${mode !== 'fast' ? `- Der **Creative** hat alternative Perspektiven eingebracht
-- Der **Critic** hat Schwachstellen in der Argumentation geprüft` : ''}
-- Der **Synthesizer** hat alles zu einer kohärenten Antwort zusammengeführt
-${mode === 'deep' ? '- Der **Quality Judge** hat die Antwortqualität bewertet und Verbesserungen angefordert' : ''}
-
-**3. Fazit**
-Die Antwort wurde durch mehrfache Perspektivenwechsel und kritische Überprüfung optimiert. Bei weiteren Fragen stehe ich gerne zur Verfügung.`;
-  }
-
-  return `Ich habe deinen Auftrag analysiert und mit ${AGENTS[mode].length} Agenten verarbeitet.
-
-### Ergebnis
-
-**Aufgabe verstanden:** ${prompt.substring(0, 80)}${prompt.length > 80 ? '…' : ''}
-
-**Vorgehensweise:**
-1. **Analyse** — Aufgabenstellung zerlegt und Anforderungen identifiziert
-2. **Recherche** — Relevante Informationen und Best Practices gesammelt
-${mode !== 'fast' ? `3. **Kreation** — Verschiedene Ansätze und Lösungswege entwickelt
-4. **Kritik** — Jeden Ansatz auf Schwächen und Verbesserungspotenzial geprüft` : ''}
-${mode === 'deep' ? `5. **Qualitätsprüfung** — Finale Bewertung durch den Quality Judge` : ''}
-
-**Hinweis:** Dies ist eine Demonstration der Multi-Agent-Orchestrierung. Im vollständigen Modus werden die Agenten mit OpenAI und Anthropic APIs verbunden, um noch tiefere und präzisere Antworten zu liefern.
-
-Möchtest du, dass ich einen bestimmten Aspekt genauer ausarbeite?`;
-}
-
-function getAgentSummary(agentId, prompt) {
-  const short = prompt.substring(0, 40);
-  const summaries = {
-    analyst: `Aufgabe analysiert und in Kernkomponenten zerlegt. Hauptthema identifiziert: "${short}…"`,
-    researcher: 'Relevante Fakten, Studien und Best Practices zusammengetragen. Quellen geprüft und priorisiert.',
-    creative: 'Alternative Perspektiven und unkonventionelle Lösungsansätze entwickelt. 3 verschiedene Ansätze generiert.',
-    critic: 'Alle Ansätze auf logische Konsistenz, Schwächen und Verbesserungspotenzial geprüft.',
-    synthesizer: 'Beste Elemente aller Agenten zu einer kohärenten, strukturierten Antwort zusammengeführt.',
-    judge: 'Qualitätsbewertung: 8.4/10. Klarheit und Struktur als Stärken identifiziert.'
-  };
-  return summaries[agentId] || 'Verarbeitung abgeschlossen.';
 }
 
 function setMode(mode) {
