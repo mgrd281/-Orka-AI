@@ -31,7 +31,7 @@
 		6DAD0CBC1214A4879848C947 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		78F74B2A1CD716FC70B795B3 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		87C99D24A4F572A85519439B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		96FB71CED3EA40764B808C1A /* OrkaAI.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OrkaAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		96FB71CED3EA40764B808C1A /* Orka AI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Orka AI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C15308ECFD8D0EBB9D75FBA1 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		CA6E3E16443D299418E038B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		EA7DDBCFEFA8396D2D5B18F7 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 		8D90CE922BA52C20DA97FB22 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				96FB71CED3EA40764B808C1A /* OrkaAI.app */,
+				96FB71CED3EA40764B808C1A /* Orka AI.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,7 +169,7 @@
 			packageProductDependencies = (
 			);
 			productName = OrkaAI;
-			productReference = 96FB71CED3EA40764B808C1A /* OrkaAI.app */;
+			productReference = 96FB71CED3EA40764B808C1A /* Orka AI.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -182,7 +182,6 @@
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					D9297132129FF242E1674121 = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -248,7 +247,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3227J7CBXY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_GENERATION_MODE = GeneratedByXcode;
 				INFOPLIST_KEY_CFBundleDisplayName = "Orka AI";
@@ -276,7 +275,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3227J7CBXY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_GENERATION_MODE = GeneratedByXcode;
 				INFOPLIST_KEY_CFBundleDisplayName = "Orka AI";
