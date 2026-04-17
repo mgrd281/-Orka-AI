@@ -1,0 +1,76 @@
+name: orka_ai
+description: "Koordinierte Intelligenz — Multi-Agent AI Platform"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Routing
+  go_router: ^14.2.0
+
+  # HTTP & API
+  dio: ^5.5.0
+  retrofit: ^4.1.0
+  json_annotation: ^4.9.0
+
+  # Auth
+  flutter_secure_storage: ^9.2.0
+
+  # UI
+  google_fonts: ^6.2.0
+  flutter_svg: ^2.0.10
+  shimmer: ^3.0.0
+  flutter_animate: ^4.5.0
+  cached_network_image: ^3.3.1
+  flutter_markdown: ^0.7.3
+
+  # Utilities
+  intl: ^0.19.0
+  uuid: ^4.4.0
+  url_launcher: ^6.3.0
+  share_plus: ^9.0.0
+  connectivity_plus: ^6.0.3
+  package_info_plus: ^8.0.0
+
+  # Icons
+  iconsax: ^0.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.11
+  json_serializable: ^6.8.0
+  riverpod_generator: ^2.4.0
+  retrofit_generator: ^8.1.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
