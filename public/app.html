@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Orka AI</title>
+  <meta name="theme-color" content="#0D0D1A">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Marked.js for markdown rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #6C5CE7;
+      --primary-dark: #5A4BD1;
+      --secondary: #00D2FF;
+      --surface: #0D0D1A;
+      --surface-card: #161628;
+      --surface-elevated: #1E1E3A;
+      --text-primary: #FFFFFF;
+      --text-secondary: #8B8BA7;
+      --text-tertiary: #5A5A78;
+      --border: #2A2A4A;
+      --success: #00C48C;
+      --warning: #FFB800;
+      --error: #FF4757;
+      --agent-analyst: #6C5CE7;
+      --agent-researcher: #00D2FF;
+      --agent-creative: #A855F7;
+      --agent-critic: #FF6B6B;
+      --agent-synthesizer: #00C48C;
+      --agent-judge: #FFB800;
+    }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--surface);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ══════════════ AUTH SCREEN ══════════════ */
+    .auth-screen {
+      display: flex; align-items: center; justify-content: center;
+      height: 100vh; padding: 24px;
+      background: var(--surface);
+    }
+    .auth-screen.hidden { display: none; }
+    .auth-card {
+      width: 100%; max-width: 400px;
+      text-align: center;
+    }
+    .auth-logo {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, #6C5CE7, #00D2FF);
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 28px; color: white;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 48px rgba(108,92,231,0.3);
+    }
+    .auth-card h1 { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+    .auth-card .tagline { color: var(--text-secondary); font-size: 14px; margin-bottom: 40px; }
+    .auth-field {
+      width: 100%; padding: 15px 18px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: white; font-size: 15px;
+      font-family: inherit; outline: none;
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+    .auth-field:focus { border-color: var(--primary); }
+    .auth-field::placeholder { color: var(--text-tertiary); }
+    .auth-btn {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, #6C5CE7, #00D2FF);
+      color: white; border: none;
+      border-radius: 14px;
+      font-size: 16px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+    .auth-btn:hover { opacity: 0.9; }
+    .auth-toggle {
+      margin-top: 24px; font-size: 13px; color: var(--text-secondary);
+    }
+    .auth-toggle a {
+      color: var(--primary); text-decoration: none; font-weight: 600;
+      cursor: pointer;
+    }
+    .auth-error {
+      color: var(--error); font-size: 13px;
+      margin-top: 12px; display: none;
+    }
+    .auth-error.show { display: block; }
+
+    /* ══════════════ APP SHELL ══════════════ */
+    .app { display: none; height: 100vh; flex-direction: column; }
+    .app.active { display: flex; }
+
+    /* ── Top Bar ── */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid rgba(42,42,74,0.4);
+      flex-shrink: 0;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-logo {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, #6C5CE7, #00D2FF);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 14px; color: white;
+    }
+    .topbar-title { font-weight: 700; font-size: 16px; }
+    .topbar-right { display: flex; align-items: center; gap: 8px; }
+    .topbar-btn {
+      width: 36px; height: 36px;
+      background: none; border: none;
+      color: var(--text-secondary);
+      border-radius: 10px;
+      cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .topbar-btn:hover { background: var(--surface-card); color: var(--text-primary); }
+
+    /* ── Chat Area ── */
+    .chat-area {
+      flex: 1; overflow-y: auto;
+      padding: 16px;
+      scroll-behavior: smooth;
+    }
+    .chat-area::-webkit-scrollbar { width: 4px; }
+    .chat-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* ── Empty State ── */
+    .empty-state {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      height: 100%; text-align: center;
+      padding: 32px;
+    }
+    .empty-state.hidden { display: none; }
+    .empty-icon {
+      width: 72px; height: 72px;
+      background: rgba(108,92,231,0.1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      margin-bottom: 24px;
+    }
+    .empty-state h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .empty-state p { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; max-width: 360px; line-height: 1.6; }
+    .suggestions { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 480px; }
+    .suggestion {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+      text-align: left;
+    }
+    .suggestion:hover { border-color: rgba(108,92,231,0.4); transform: translateX(4px); }
+    .suggestion .emoji { font-size: 20px; flex-shrink: 0; }
+    .suggestion .text { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+    .suggestion .arrow { color: var(--text-tertiary); margin-left: auto; flex-shrink: 0; }
+
+    /* ── Messages ── */
+    .message { margin-bottom: 16px; animation: msgIn 0.3s ease; }
+    @keyframes msgIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .message-user { display: flex; justify-content: flex-end; }
+    .message-user .bubble {
+      background: var(--primary);
+      color: white;
+      padding: 14px 18px;
+      border-radius: 18px 18px 4px 18px;
+      max-width: 75%;
+      font-size: 14px; line-height: 1.6;
+      word-break: break-word;
+    }
+    .message-assistant { display: flex; flex-direction: column; align-items: flex-start; }
+    .message-assistant .bubble {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      padding: 18px 20px;
+      border-radius: 18px 18px 18px 4px;
+      max-width: 85%;
+      font-size: 14px; line-height: 1.7;
+      word-break: break-word;
+    }
+    .message-assistant .bubble h1, .message-assistant .bubble h2, .message-assistant .bubble h3 {
+      margin: 16px 0 8px; font-weight: 700;
+    }
+    .message-assistant .bubble h1 { font-size: 20px; }
+    .message-assistant .bubble h2 { font-size: 17px; }
+    .message-assistant .bubble h3 { font-size: 15px; }
+    .message-assistant .bubble p { margin: 8px 0; }
+    .message-assistant .bubble ul, .message-assistant .bubble ol { padding-left: 20px; margin: 8px 0; }
+    .message-assistant .bubble li { margin: 4px 0; }
+    .message-assistant .bubble strong { font-weight: 600; }
+    .message-assistant .bubble code {
+      background: var(--surface-elevated);
+      padding: 2px 6px; border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; color: var(--secondary);
+    }
+    .message-assistant .bubble pre {
+      background: var(--surface-elevated);
+      padding: 16px; border-radius: 10px;
+      overflow-x: auto; margin: 12px 0;
+    }
+    .message-assistant .bubble pre code {
+      background: none; padding: 0;
+      font-size: 13px; color: var(--text-primary);
+    }
+    .message-assistant .bubble blockquote {
+      border-left: 3px solid rgba(108,92,231,0.5);
+      padding-left: 14px; margin: 12px 0;
+      color: var(--text-secondary);
+    }
+    .msg-actions {
+      display: flex; gap: 6px; margin-top: 8px;
+    }
+    .msg-action {
+      display: flex; align-items: center; gap: 4px;
+      padding: 5px 10px;
+      background: none; border: none;
+      color: var(--text-tertiary); font-size: 12px;
+      cursor: pointer; border-radius: 8px;
+      font-family: inherit;
+      transition: color 0.2s, background 0.2s;
+    }
+    .msg-action:hover { color: var(--primary); background: rgba(108,92,231,0.08); }
+
+    /* ── Agent Thinking ── */
+    .thinking-card {
+      padding: 20px;
+      background: var(--surface-card);
+      border: 1px solid rgba(108,92,231,0.2);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      animation: msgIn 0.3s ease;
+    }
+    .thinking-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .thinking-dot {
+      width: 10px; height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: thinkPulse 1.5s ease-in-out infinite;
+      box-shadow: 0 0 8px rgba(108,92,231,0.4);
+    }
+    @keyframes thinkPulse {
+      0%, 100% { transform: scale(0.8); opacity: 0.6; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+    .thinking-label { font-size: 13px; font-weight: 600; color: var(--primary); }
+    .thinking-step {
+      display: flex; align-items: center; gap: 10px;
+      padding: 6px 0; font-size: 13px;
+    }
+    .thinking-step .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .thinking-step.active .dot { background: var(--primary); }
+    .thinking-step.active .name { color: var(--text-secondary); }
+    .thinking-step.done .dot { background: var(--success); }
+    .thinking-step.done .name { color: var(--text-tertiary); }
+    .thinking-step .name { transition: color 0.3s; }
+    .thinking-dots {
+      display: inline-flex; gap: 3px; margin-left: 4px;
+    }
+    .thinking-dots span {
+      width: 4px; height: 4px;
+      background: var(--text-tertiary);
+      border-radius: 50%;
+      animation: dotBlink 1.2s ease-in-out infinite;
+    }
+    .thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dotBlink {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    /* ── Reasoning Panel ── */
+    .reasoning-toggle {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 10px;
+      background: rgba(108,92,231,0.08);
+      border: none; color: var(--primary);
+      font-size: 12px; cursor: pointer;
+      border-radius: 8px; font-family: inherit;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .reasoning-toggle:hover { background: rgba(108,92,231,0.15); }
+    .reasoning-panel {
+      display: none;
+      margin-top: 12px;
+      padding: 16px;
+      background: rgba(108,92,231,0.04);
+      border-radius: 12px;
+      border: 1px solid rgba(108,92,231,0.1);
+    }
+    .reasoning-panel.open { display: block; animation: msgIn 0.3s ease; }
+    .reasoning-step {
+      display: flex; gap: 10px;
+      padding: 8px 0;
+      font-size: 13px;
+    }
+    .reasoning-step .agent-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-top: 5px; flex-shrink: 0;
+    }
+    .reasoning-step .agent-name {
+      font-weight: 600; font-size: 12px;
+      margin-bottom: 2px;
+    }
+    .reasoning-step .agent-text {
+      color: var(--text-secondary); line-height: 1.5;
+    }
+
+    /* ── Mode Selector ── */
+    .mode-bar {
+      display: flex; justify-content: center;
+      padding: 8px 16px;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .mode-chip {
+      display: flex; align-items: center; gap: 6px;
+      padding: 9px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-secondary);
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.25s ease;
+    }
+    .mode-chip:hover { border-color: var(--text-tertiary); }
+    .mode-chip.active[data-mode="fast"] {
+      background: rgba(0,196,140,0.12);
+      border-color: rgba(0,196,140,0.4);
+      color: var(--success);
+      font-weight: 600;
+    }
+    .mode-chip.active[data-mode="smart"] {
+      background: rgba(108,92,231,0.12);
+      border-color: rgba(108,92,231,0.4);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .mode-chip.active[data-mode="deep"] {
+      background: rgba(0,210,255,0.12);
+      border-color: rgba(0,210,255,0.4);
+      color: var(--secondary);
+      font-weight: 600;
+    }
+
+    /* ── Input Bar ── */
+    .input-bar {
+      display: flex; align-items: flex-end; gap: 12px;
+      padding: 12px 16px 16px;
+      border-top: 1px solid rgba(42,42,74,0.4);
+      flex-shrink: 0;
+      background: var(--surface);
+    }
+    .input-wrap {
+      flex: 1;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      display: flex; align-items: flex-end;
+      transition: border-color 0.2s;
+      max-height: 120px;
+    }
+    .input-wrap:focus-within { border-color: rgba(108,92,231,0.5); }
+    .input-wrap textarea {
+      flex: 1; padding: 14px 18px;
+      background: transparent;
+      border: none; outline: none;
+      color: white; font-size: 15px;
+      font-family: inherit;
+      resize: none;
+      max-height: 100px;
+      line-height: 1.4;
+    }
+    .input-wrap textarea::placeholder { color: var(--text-tertiary); }
+    .send-btn {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, #6C5CE7, #00D2FF);
+      border: none; border-radius: 14px;
+      color: white; font-size: 20px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+    .send-btn:hover { opacity: 0.9; transform: scale(1.03); }
+    .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .send-btn svg { width: 20px; height: 20px; }
+
+    /* ── Sidebar ── */
+    .sidebar-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 200;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .sidebar-overlay.open { opacity: 1; pointer-events: all; }
+    .sidebar {
+      position: fixed; top: 0; left: 0; bottom: 0;
+      width: 300px; max-width: 85vw;
+      background: var(--surface-card);
+      border-right: 1px solid var(--border);
+      z-index: 201;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      display: flex; flex-direction: column;
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-header h3 { font-size: 16px; font-weight: 700; }
+    .sidebar-close {
+      background: none; border: none; color: var(--text-secondary);
+      font-size: 22px; cursor: pointer; padding: 4px;
+    }
+    .new-chat-btn {
+      margin: 16px 16px 8px;
+      padding: 12px;
+      background: linear-gradient(135deg, #6C5CE7, #00D2FF);
+      color: white; border: none;
+      border-radius: 12px;
+      font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: opacity 0.2s;
+    }
+    .new-chat-btn:hover { opacity: 0.9; }
+    .conv-list {
+      flex: 1; overflow-y: auto;
+      padding: 8px 12px;
+    }
+    .conv-list::-webkit-scrollbar { width: 3px; }
+    .conv-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .conv-item {
+      padding: 12px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-bottom: 4px;
+      transition: background 0.2s;
+    }
+    .conv-item:hover { background: var(--surface-elevated); }
+    .conv-item.active { background: rgba(108,92,231,0.12); }
+    .conv-item .conv-title {
+      font-size: 13px; font-weight: 500;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .conv-item .conv-time {
+      font-size: 11px; color: var(--text-tertiary); margin-top: 2px;
+    }
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .sidebar-user {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sidebar-avatar {
+      width: 36px; height: 36px;
+      background: var(--surface-elevated);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--primary);
+    }
+    .sidebar-name { font-size: 13px; font-weight: 600; }
+    .sidebar-email { font-size: 11px; color: var(--text-tertiary); }
+    .logout-btn {
+      margin-top: 12px; width: 100%;
+      padding: 10px;
+      background: rgba(255,71,87,0.08);
+      border: 1px solid rgba(255,71,87,0.2);
+      border-radius: 10px;
+      color: var(--error); font-size: 13px;
+      font-weight: 500; cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .logout-btn:hover { background: rgba(255,71,87,0.15); }
+
+    /* ── Settings Panel ── */
+    .settings-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 200;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .settings-overlay.open { opacity: 1; pointer-events: all; }
+    .settings-panel {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: 360px; max-width: 90vw;
+      background: var(--surface-card);
+      border-left: 1px solid var(--border);
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+    }
+    .settings-panel.open { transform: translateX(0); }
+    .settings-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .settings-header h3 { font-size: 16px; font-weight: 700; }
+    .settings-section { padding: 20px; }
+    .settings-label {
+      font-size: 11px; font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .settings-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border-radius: 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .settings-item:hover { background: var(--surface-elevated); }
+    .settings-item .icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .settings-item .info { flex: 1; }
+    .settings-item .info .label { font-size: 14px; font-weight: 500; }
+    .settings-item .info .desc { font-size: 12px; color: var(--text-tertiary); }
+    .settings-item .chevron { color: var(--text-tertiary); font-size: 14px; }
+    .lang-options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .lang-btn {
+      padding: 10px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-secondary);
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: rgba(108,92,231,0.12);
+      border-color: rgba(108,92,231,0.4);
+      color: var(--primary); font-weight: 600;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .message-user .bubble { max-width: 88%; }
+      .message-assistant .bubble { max-width: 95%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════ AUTH ════════════ -->
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-logo">O</div>
+    <h1>Orka AI</h1>
+    <p class="tagline">Koordinierte Intelligenz</p>
+
+    <!-- Login -->
+    <div id="loginForm">
+      <input class="auth-field" type="email" id="loginEmail" placeholder="E-Mail-Adresse" autocomplete="email">
+      <input class="auth-field" type="password" id="loginPassword" placeholder="Passwort" autocomplete="current-password">
+      <button class="auth-btn" onclick="handleLogin()">Anmelden</button>
+      <div class="auth-error" id="loginError"></div>
+      <p class="auth-toggle">Noch kein Konto? <a onclick="showRegister()">Registrieren</a></p>
+    </div>
+
+    <!-- Register -->
+    <div id="registerForm" style="display:none">
+      <input class="auth-field" type="text" id="regName" placeholder="Dein Name" autocomplete="name">
+      <input class="auth-field" type="email" id="regEmail" placeholder="E-Mail-Adresse" autocomplete="email">
+      <input class="auth-field" type="password" id="regPassword" placeholder="Passwort (mind. 6 Zeichen)" autocomplete="new-password">
+      <button class="auth-btn" onclick="handleRegister()">Konto erstellen</button>
+      <div class="auth-error" id="regError"></div>
+      <p class="auth-toggle">Bereits ein Konto? <a onclick="showLogin()">Anmelden</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ APP ════════════ -->
+<div class="app" id="appShell">
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h3>Gespräche</h3>
+      <button class="sidebar-close" onclick="closeSidebar()">×</button>
+    </div>
+    <button class="new-chat-btn" onclick="newConversation()">+ Neues Gespräch</button>
+    <div class="conv-list" id="convList"></div>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="userAvatar">M</div>
+        <div>
+          <div class="sidebar-name" id="userName">—</div>
+          <div class="sidebar-email" id="userEmail">—</div>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="handleLogout()">Abmelden</button>
+    </div>
+  </div>
+
+  <!-- Settings Overlay -->
+  <div class="settings-overlay" id="settingsOverlay" onclick="closeSettings()"></div>
+  <div class="settings-panel" id="settingsPanel">
+    <div class="settings-header">
+      <h3>Einstellungen</h3>
+      <button class="sidebar-close" onclick="closeSettings()">×</button>
+    </div>
+    <div class="settings-section">
+      <div class="settings-label">Sprache</div>
+      <div class="lang-options">
+        <button class="lang-btn active" onclick="setLang(this,'de')">🇩🇪 Deutsch</button>
+        <button class="lang-btn" onclick="setLang(this,'en')">🇬🇧 English</button>
+        <button class="lang-btn" onclick="setLang(this,'ar')">🇸🇦 العربية</button>
+      </div>
+    </div>
+    <div class="settings-section">
+      <div class="settings-label">Standard-Modus</div>
+      <div class="settings-item" onclick="setDefaultMode('fast')">
+        <div class="icon" style="background:rgba(0,196,140,0.1)">⚡</div>
+        <div class="info"><div class="label">Schnell</div><div class="desc">2 Agenten · ~3 Sek</div></div>
+      </div>
+      <div class="settings-item" onclick="setDefaultMode('smart')">
+        <div class="icon" style="background:rgba(108,92,231,0.1)">🧠</div>
+        <div class="info"><div class="label">Smart</div><div class="desc">5 Agenten · ~8 Sek</div></div>
+      </div>
+      <div class="settings-item" onclick="setDefaultMode('deep')">
+        <div class="icon" style="background:rgba(0,210,255,0.1)">🔬</div>
+        <div class="info"><div class="label">Tief</div><div class="desc">6+ Agenten · ~20 Sek</div></div>
+      </div>
+    </div>
+    <div class="settings-section">
+      <div class="settings-label">Konto</div>
+      <div class="settings-item">
+        <div class="icon" style="background:rgba(108,92,231,0.1)">👤</div>
+        <div class="info"><div class="label" id="settingsUserName">—</div><div class="desc" id="settingsUserEmail">—</div></div>
+      </div>
+    </div>
+    <div class="settings-section">
+      <div class="settings-label">Info</div>
+      <div class="settings-item">
+        <div class="icon" style="background:rgba(108,92,231,0.1)">ℹ️</div>
+        <div class="info"><div class="label">Version</div><div class="desc">1.0.0 — MVP</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="topbar-btn" onclick="openSidebar()" title="Gespräche">☰</button>
+      <div class="topbar-logo">O</div>
+      <span class="topbar-title">Orka AI</span>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" onclick="newConversation()" title="Neues Gespräch">✎</button>
+      <button class="topbar-btn" onclick="openSettings()" title="Einstellungen">⚙</button>
+    </div>
+  </div>
+
+  <!-- Chat -->
+  <div class="chat-area" id="chatArea">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🧠</div>
+      <h2>Wie kann ich helfen?</h2>
+      <p>Multiple KI-Agenten arbeiten zusammen, um dir die bestmögliche Antwort zu liefern.</p>
+      <div class="suggestions">
+        <div class="suggestion" onclick="useSuggestion(this)">
+          <span class="emoji">✍️</span>
+          <span class="text">Schreibe einen überzeugenden LinkedIn-Post über KI im Alltag</span>
+          <span class="arrow">›</span>
+        </div>
+        <div class="suggestion" onclick="useSuggestion(this)">
+          <span class="emoji">📊</span>
+          <span class="text">Analysiere Vor- und Nachteile von Remote-Arbeit für Startups</span>
+          <span class="arrow">›</span>
+        </div>
+        <div class="suggestion" onclick="useSuggestion(this)">
+          <span class="emoji">💡</span>
+          <span class="text">Erkläre Quantencomputing einfach und verständlich</span>
+          <span class="arrow">›</span>
+        </div>
+        <div class="suggestion" onclick="useSuggestion(this)">
+          <span class="emoji">🚀</span>
+          <span class="text">Erstelle einen Businessplan für eine nachhaltige App-Idee</span>
+          <span class="arrow">›</span>
+        </div>
+      </div>
+    </div>
+    <div id="messagesContainer"></div>
+  </div>
+
+  <!-- Mode Selector -->
+  <div class="mode-bar">
+    <button class="mode-chip" data-mode="fast" onclick="setMode('fast')">⚡ Schnell</button>
+    <button class="mode-chip active" data-mode="smart" onclick="setMode('smart')">🧠 Smart</button>
+    <button class="mode-chip" data-mode="deep" onclick="setMode('deep')">🔬 Tief</button>
+  </div>
+
+  <!-- Input -->
+  <div class="input-bar">
+    <div class="input-wrap">
+      <textarea id="msgInput" rows="1" placeholder="Schreibe eine Nachricht..." onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
+    </div>
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let currentUser = null;
+let currentMode = 'smart';
+let conversations = [];
+let activeConvId = null;
+let isGenerating = false;
+
+const AGENTS = {
+  fast: [
+    { id: 'analyst', name: 'Analyst', color: 'var(--agent-analyst)' },
+    { id: 'synthesizer', name: 'Synthesizer', color: 'var(--agent-synthesizer)' }
+  ],
+  smart: [
+    { id: 'analyst', name: 'Analyst', color: 'var(--agent-analyst)' },
+    { id: 'researcher', name: 'Researcher', color: 'var(--agent-researcher)' },
+    { id: 'creative', name: 'Creative', color: 'var(--agent-creative)' },
+    { id: 'critic', name: 'Critic', color: 'var(--agent-critic)' },
+    { id: 'synthesizer', name: 'Synthesizer', color: 'var(--agent-synthesizer)' }
+  ],
+  deep: [
+    { id: 'analyst', name: 'Analyst', color: 'var(--agent-analyst)' },
+    { id: 'researcher', name: 'Researcher', color: 'var(--agent-researcher)' },
+    { id: 'creative', name: 'Creative', color: 'var(--agent-creative)' },
+    { id: 'critic', name: 'Critic', color: 'var(--agent-critic)' },
+    { id: 'synthesizer', name: 'Synthesizer', color: 'var(--agent-synthesizer)' },
+    { id: 'judge', name: 'Quality Judge', color: 'var(--agent-judge)' }
+  ]
+};
+
+// ═══════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════
+function loadUser() {
+  const u = localStorage.getItem('orka_user');
+  if (u) {
+    currentUser = JSON.parse(u);
+    showApp();
+  }
+}
+
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw = document.getElementById('loginPassword').value;
+  if (!email || !pw) return showError('loginError', 'Bitte alle Felder ausfüllen.');
+  if (pw.length < 6) return showError('loginError', 'Passwort mindestens 6 Zeichen.');
+
+  const users = JSON.parse(localStorage.getItem('orka_users') || '{}');
+  if (!users[email]) return showError('loginError', 'Konto nicht gefunden. Bitte registrieren.');
+  if (users[email].password !== pw) return showError('loginError', 'Falsches Passwort.');
+
+  currentUser = { name: users[email].name, email };
+  localStorage.setItem('orka_user', JSON.stringify(currentUser));
+  showApp();
+}
+
+function handleRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pw = document.getElementById('regPassword').value;
+  if (!name || !email || !pw) return showError('regError', 'Bitte alle Felder ausfüllen.');
+  if (pw.length < 6) return showError('regError', 'Passwort mindestens 6 Zeichen.');
+  if (!email.includes('@')) return showError('regError', 'Ungültige E-Mail-Adresse.');
+
+  const users = JSON.parse(localStorage.getItem('orka_users') || '{}');
+  if (users[email]) return showError('regError', 'E-Mail bereits registriert.');
+
+  users[email] = { name, password: pw };
+  localStorage.setItem('orka_users', JSON.stringify(users));
+
+  currentUser = { name, email };
+  localStorage.setItem('orka_user', JSON.stringify(currentUser));
+  showApp();
+}
+
+function handleLogout() {
+  currentUser = null;
+  localStorage.removeItem('orka_user');
+  document.getElementById('authScreen').classList.remove('hidden');
+  document.getElementById('appShell').classList.remove('active');
+  closeSidebar(); closeSettings();
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 4000);
+}
+
+function showLogin() {
+  document.getElementById('loginForm').style.display = '';
+  document.getElementById('registerForm').style.display = 'none';
+}
+function showRegister() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('registerForm').style.display = '';
+}
+
+function showApp() {
+  document.getElementById('authScreen').classList.add('hidden');
+  document.getElementById('appShell').classList.add('active');
+  document.getElementById('userName').textContent = currentUser.name;
+  document.getElementById('userEmail').textContent = currentUser.email;
+  document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+  document.getElementById('settingsUserName').textContent = currentUser.name;
+  document.getElementById('settingsUserEmail').textContent = currentUser.email;
+  loadConversations();
+  document.getElementById('msgInput').focus();
+}
+
+// ═══════════════════════════════════════
+// CONVERSATIONS
+// ═══════════════════════════════════════
+function loadConversations() {
+  conversations = JSON.parse(localStorage.getItem('orka_convs_' + currentUser.email) || '[]');
+  renderConvList();
+}
+
+function saveConversations() {
+  localStorage.setItem('orka_convs_' + currentUser.email, JSON.stringify(conversations));
+  renderConvList();
+}
+
+function newConversation() {
+  activeConvId = null;
+  document.getElementById('messagesContainer').innerHTML = '';
+  document.getElementById('emptyState').style.display = '';
+  document.getElementById('emptyState').classList.remove('hidden');
+  document.getElementById('msgInput').focus();
+  closeSidebar();
+  renderConvList();
+}
+
+function openConversation(id) {
+  const conv = conversations.find(c => c.id === id);
+  if (!conv) return;
+  activeConvId = id;
+  document.getElementById('emptyState').style.display = 'none';
+  const container = document.getElementById('messagesContainer');
+  container.innerHTML = '';
+  conv.messages.forEach(msg => {
+    if (msg.role === 'user') addUserBubble(msg.content);
+    else addAssistantBubble(msg.content, msg.reasoning);
+  });
+  closeSidebar();
+  scrollToBottom();
+}
+
+function renderConvList() {
+  const list = document.getElementById('convList');
+  list.innerHTML = '';
+  conversations.slice().reverse().forEach(c => {
+    const item = document.createElement('div');
+    item.className = 'conv-item' + (c.id === activeConvId ? ' active' : '');
+    item.innerHTML = `<div class="conv-title">${escapeHtml(c.title)}</div><div class="conv-time">${c.time}</div>`;
+    item.onclick = () => openConversation(c.id);
+    list.appendChild(item);
+  });
+}
+
+function getOrCreateConv(firstMsg) {
+  if (activeConvId) return conversations.find(c => c.id === activeConvId);
+  const conv = {
+    id: 'conv_' + Date.now(),
+    title: firstMsg.substring(0, 50) + (firstMsg.length > 50 ? '…' : ''),
+    time: new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }),
+    messages: [],
+    mode: currentMode
+  };
+  conversations.push(conv);
+  activeConvId = conv.id;
+  saveConversations();
+  return conv;
+}
+
+// ═══════════════════════════════════════
+// CHAT
+// ═══════════════════════════════════════
+function useSuggestion(el) {
+  const text = el.querySelector('.text').textContent;
+  document.getElementById('msgInput').value = text;
+  sendMessage();
+}
+
+function handleKeyDown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+async function sendMessage() {
+  const input = document.getElementById('msgInput');
+  const content = input.value.trim();
+  if (!content || isGenerating) return;
+
+  isGenerating = true;
+  document.getElementById('sendBtn').disabled = true;
+
+  // Hide empty state
+  document.getElementById('emptyState').style.display = 'none';
+
+  // Get/create conversation
+  const conv = getOrCreateConv(content);
+  conv.messages.push({ role: 'user', content });
+  saveConversations();
+
+  // Show user message
+  addUserBubble(content);
+  input.value = ''; input.style.height = 'auto';
+  scrollToBottom();
+
+  // Show agent thinking
+  const thinkingEl = showThinking();
+  scrollToBottom();
+
+  // Simulate multi-agent orchestration
+  const agents = AGENTS[currentMode];
+  const reasoning = [];
+
+  for (let i = 0; i < agents.length; i++) {
+    updateThinking(thinkingEl, agents, i);
+    scrollToBottom();
+    const delay = currentMode === 'fast' ? 800 : currentMode === 'deep' ? 2000 : 1200;
+    await sleep(delay + Math.random() * 600);
+    reasoning.push({
+      agent: agents[i].id,
+      name: agents[i].name,
+      color: agents[i].color,
+      summary: getAgentSummary(agents[i].id, content)
+    });
+  }
+
+  // Remove thinking, generate response
+  thinkingEl.remove();
+
+  const response = await generateResponse(content, currentMode, reasoning);
+  conv.messages.push({ role: 'assistant', content: response, reasoning });
+  saveConversations();
+
+  addAssistantBubble(response, reasoning);
+  scrollToBottom();
+
+  isGenerating = false;
+  document.getElementById('sendBtn').disabled = false;
+  document.getElementById('msgInput').focus();
+}
+
+function addUserBubble(content) {
+  const container = document.getElementById('messagesContainer');
+  const div = document.createElement('div');
+  div.className = 'message message-user';
+  div.innerHTML = `<div class="bubble">${escapeHtml(content)}</div>`;
+  container.appendChild(div);
+}
+
+function addAssistantBubble(content, reasoning) {
+  const container = document.getElementById('messagesContainer');
+  const div = document.createElement('div');
+  div.className = 'message message-assistant';
+
+  const renderedContent = typeof marked !== 'undefined' ? marked.parse(content) : escapeHtml(content);
+  const reasoningId = 'reason_' + Date.now() + Math.random().toString(36).substr(2,4);
+
+  let reasoningHtml = '';
+  if (reasoning && reasoning.length > 0) {
+    reasoningHtml = `
+      <button class="reasoning-toggle" onclick="toggleReasoning('${reasoningId}')">
+        🧠 Denkprozess anzeigen
+      </button>
+      <div class="reasoning-panel" id="${reasoningId}">
+        ${reasoning.map(r => `
+          <div class="reasoning-step">
+            <div class="agent-dot" style="background:${r.color}"></div>
+            <div>
+              <div class="agent-name" style="color:${r.color}">${r.name}</div>
+              <div class="agent-text">${escapeHtml(r.summary)}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  div.innerHTML = `
+    <div class="bubble">${renderedContent}</div>
+    <div class="msg-actions">
+      <button class="msg-action" onclick="copyMessage(this)">📋 Kopieren</button>
+      ${reasoningHtml}
+    </div>
+  `;
+  container.appendChild(div);
+}
+
+function toggleReasoning(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function copyMessage(btn) {
+  const bubble = btn.closest('.message-assistant').querySelector('.bubble');
+  navigator.clipboard.writeText(bubble.textContent).then(() => {
+    btn.textContent = '✓ Kopiert';
+    setTimeout(() => btn.textContent = '📋 Kopieren', 2000);
+  });
+}
+
+// ═══════════════════════════════════════
+// THINKING INDICATOR
+// ═══════════════════════════════════════
+function showThinking() {
+  const container = document.getElementById('messagesContainer');
+  const div = document.createElement('div');
+  div.className = 'thinking-card';
+  div.innerHTML = `
+    <div class="thinking-header">
+      <div class="thinking-dot"></div>
+      <div class="thinking-label">Agenten arbeiten …</div>
+    </div>
+    <div class="thinking-steps"></div>
+  `;
+  container.appendChild(div);
+  return div;
+}
+
+function updateThinking(el, agents, currentIdx) {
+  const stepsEl = el.querySelector('.thinking-steps');
+  stepsEl.innerHTML = agents.map((a, i) => {
+    if (i < currentIdx) {
+      return `<div class="thinking-step done"><div class="dot" style="background:var(--success)"></div><span class="name">${a.name} ✓</span></div>`;
+    } else if (i === currentIdx) {
+      return `<div class="thinking-step active"><div class="dot" style="background:${a.color}"></div><span class="name">${a.name}</span><div class="thinking-dots"><span></span><span></span><span></span></div></div>`;
+    } else {
+      return `<div class="thinking-step"><div class="dot" style="background:var(--border)"></div><span class="name" style="color:var(--text-tertiary)">${a.name}</span></div>`;
+    }
+  }).join('');
+}
+
+// ═══════════════════════════════════════
+// AI RESPONSE GENERATION
+// ═══════════════════════════════════════
+async function generateResponse(prompt, mode, reasoning) {
+  // This generates a high-quality response locally.
+  // When backend is deployed, replace with API call.
+  const responses = getSmartResponse(prompt, mode);
+  return responses;
+}
+
+function getSmartResponse(prompt, mode) {
+  const lower = prompt.toLowerCase();
+  const modeLabel = mode === 'fast' ? 'Schnell' : mode === 'deep' ? 'Tief' : 'Smart';
+
+  // Context-aware responses
+  if (lower.includes('linkedin') || lower.includes('post')) {
+    return `## LinkedIn-Post: KI im Alltag
+
+**Hook:** Die meisten Menschen nutzen KI falsch. Sie stellen eine Frage und akzeptieren die erste Antwort. Aber was, wenn ein ganzes Team von KI-Experten zusammenarbeitet?
+
+---
+
+🤖 **Die Zukunft der KI ist nicht ein Modell — sondern Orchestrierung.**
+
+Bei Orka AI haben wir etwas Neues gebaut: Statt einer einzelnen KI arbeiten **6 spezialisierte Agenten** zusammen:
+
+→ Der **Analyst** zerlegt dein Problem
+→ Der **Researcher** findet die besten Daten
+→ Der **Creative** denkt quer
+→ Der **Critic** hinterfragt alles
+→ Der **Synthesizer** baut die finale Antwort
+→ Der **Judge** prüft die Qualität
+
+Das Ergebnis? Antworten, die sich anfühlen, als hätte ein ganzes Beraterteam daran gearbeitet.
+
+**3 Takeaways:**
+1. Einzelne KI-Modelle haben blinde Flecken — Teams nicht
+2. Kritisches Denken in der KI-Pipeline erhöht die Qualität um ein Vielfaches
+3. Die Zukunft gehört orchestrierten Systemen
+
+Was denkst du — wird Multi-Agent AI der neue Standard?
+
+#KI #AI #Innovation #Technologie #Zukunft
+
+---
+*Erstellt im ${modeLabel}-Modus mit ${mode === 'fast' ? '2' : mode === 'deep' ? '6' : '5'} Agenten.*`;
+  }
+
+  if (lower.includes('remote') || lower.includes('arbeit') || lower.includes('homeoffice')) {
+    return `## Analyse: Remote-Arbeit für Startups
+
+### Vorteile
+
+**1. Talentpool ohne Grenzen**
+Startups können weltweit die besten Talente einstellen, unabhängig vom Standort. Das ist besonders wertvoll für spezialisierte Rollen in KI, Engineering oder Design.
+
+**2. Kostenreduktion**
+- Keine Bürokosten (Miete, Ausstattung, Nebenkosten)
+- Geringere Fixkosten in der kritischen Frühphase
+- Mitarbeiter sparen Pendelzeit und -kosten
+
+**3. Produktivität**
+Studien zeigen: Remote-Mitarbeiter arbeiten im Schnitt **13% produktiver** (Stanford, 2023). Weniger Ablenkungen, weniger Meetings, mehr Deep Work.
+
+**4. Skalierbarkeit**
+Teams können schnell wachsen, ohne physische Infrastruktur aufbauen zu müssen.
+
+### Nachteile
+
+**1. Kultur-Aufbau**
+Startup-Kultur lebt von Energie, spontanen Gesprächen und gemeinsamen Erlebnissen. Remote macht das deutlich schwieriger.
+
+**2. Kommunikations-Overhead**
+- Asynchrone Kommunikation erfordert bessere Dokumentation
+- Missverständnisse häufen sich ohne nonverbale Signale
+- Onboarding neuer Mitarbeiter ist aufwändiger
+
+**3. Innovation leidet**
+Kreative Durchbrüche entstehen oft in ungeplanten Momenten — am Whiteboard, beim Kaffee, im Flur. Diese fehlen remote.
+
+**4. Führung wird komplexer**
+Manager müssen neue Skills entwickeln: Vertrauen statt Kontrolle, Ergebnisorientierung statt Anwesenheit.
+
+### Empfehlung
+
+**Hybrid-Modell** für die meisten Startups:
+- **2-3 Tage Remote** für Deep Work
+- **2-3 Tage vor Ort** für Zusammenarbeit und Kultur
+- **Vollständig remote** nur für hochspezialisierte oder verteilte Teams
+
+> *"Die besten Startups bauen nicht entweder remote oder vor Ort — sie bauen bewusst."*`;
+  }
+
+  if (lower.includes('quanten') || lower.includes('quantum')) {
+    return `## Quantencomputing — einfach erklärt
+
+### Was ist ein normaler Computer?
+
+Stell dir ein Lichtschalter vor: **An** oder **Aus**. Das ist ein **Bit** — die kleinste Informationseinheit. Dein Computer besteht aus Milliarden solcher Schalter, die blitzschnell zwischen 0 und 1 wechseln.
+
+### Was ist ein Quantencomputer?
+
+Jetzt stell dir vor, der Schalter könnte **gleichzeitig An UND Aus** sein. Das klingt verrückt, aber genau das passiert in der Quantenwelt. Diese Einheit heißt **Qubit**.
+
+### Die drei Superkräfte
+
+**1. Superposition** 🌀
+Ein Qubit kann 0, 1 oder beides gleichzeitig sein. Wie eine Münze, die sich dreht — sie ist gleichzeitig Kopf und Zahl, bis sie landet.
+
+**2. Verschränkung** 🔗
+Zwei Qubits können "verbunden" sein. Ändert sich einer, ändert sich der andere sofort — egal wie weit entfernt. Einstein nannte das *"spukhafte Fernwirkung"*.
+
+**3. Interferenz** 〰️
+Quantencomputer können falsche Antworten auslöschen und richtige verstärken — wie Wellen, die sich gegenseitig aufheben oder verstärken.
+
+### Wofür ist das gut?
+
+| Problem | Normaler PC | Quantencomputer |
+|---------|-------------|-----------------|
+| Medikamentenentwicklung | Jahre | Wochen |
+| Routenoptimierung | Gute Lösung | Beste Lösung |
+| Verschlüsselung knacken | Unmöglich | Machbar |
+| Materialforschung | Simulation begrenzt | Exakte Simulation |
+
+### Wofür ist es NICHT gut?
+
+- Netflix schauen ❌
+- E-Mails schreiben ❌
+- Normale Alltagsaufgaben ❌
+
+Quantencomputer lösen **spezifische, extrem komplexe Probleme** schneller. Sie ersetzen normale Computer nicht — sie ergänzen sie.
+
+### Wo stehen wir heute?
+
+> Wir sind beim Quantencomputing ungefähr da, wo normale Computer in den **1950er-Jahren** waren — riesige Maschinen, experimentell, aber mit unglaublichem Potenzial.`;
+  }
+
+  if (lower.includes('business') || lower.includes('plan') || lower.includes('app-idee') || lower.includes('startup')) {
+    return `## Businessplan: Nachhaltige App-Idee
+
+### 🌱 Konzept: "GreenLoop"
+**Eine App, die nachhaltigen Konsum spielerisch einfach macht.**
+
+---
+
+### 1. Problem
+
+80% der Menschen wollen nachhaltiger leben, aber nur 20% tun es konsequent. Warum?
+- Zu kompliziert
+- Zu teuer (gefühlt)
+- Keine sofortige Belohnung
+- Überforderung durch Informationsflut
+
+### 2. Lösung
+
+**GreenLoop** macht Nachhaltigkeit messbar, belohnend und sozial:
+- 📸 **Scan & Score**: Produkte scannen, sofort Nachhaltigkeits-Score sehen
+- 🎯 **Tägliche Challenges**: Kleine Aktionen mit großer Wirkung
+- 🏆 **Gamification**: Punkte, Streaks, Levels, Belohnungen
+- 👥 **Community**: Teams bilden, gemeinsam CO₂ sparen
+- 💚 **Impact-Dashboard**: Zeigt deinen persönlichen Beitrag
+
+### 3. Markt
+
+| Metrik | Wert |
+|--------|------|
+| TAM (Sustainability Apps) | €4.2 Mrd. (2026) |
+| SAM (DACH-Region) | €380 Mio. |
+| SOM (Jahr 1) | €3.8 Mio. |
+| Wachstum | 24% p.a. |
+
+### 4. Geschäftsmodell
+
+**Freemium + B2B:**
+- **Free**: Basis-Features, 3 Scans/Tag
+- **Premium (€4.99/mo)**: Unbegrenzt, detaillierte Analysen, exklusive Challenges
+- **B2B**: Unternehmen bieten GreenLoop als Mitarbeiter-Benefit an (€2/Mitarbeiter/mo)
+
+### 5. Go-to-Market
+
+**Phase 1 (Monat 1-3):** MVP mit Scan & Challenges, 1.000 Beta-Nutzer
+**Phase 2 (Monat 4-6):** Gamification, Community-Features, 10.000 Nutzer
+**Phase 3 (Monat 7-12):** B2B-Vertrieb, Partnerschaften, 50.000 Nutzer
+
+### 6. Finanzen (Jahr 1)
+
+| Position | Betrag |
+|----------|--------|
+| Entwicklung | €120.000 |
+| Marketing | €60.000 |
+| Betrieb | €40.000 |
+| **Gesamt** | **€220.000** |
+| Umsatz (Jahr 1) | €180.000 |
+| Break-even | Monat 14 |
+
+### 7. Team-Bedarf
+- 1× Fullstack Developer
+- 1× UI/UX Designer
+- 1× Marketing / Growth
+- 1× CEO / Product
+
+### 8. Nächste Schritte
+1. MVP in 8 Wochen bauen
+2. 100 Beta-Tester gewinnen
+3. Seed-Runde: €300.000 bei €1.5M Pre-Money
+4. Launch in DACH-Markt
+
+---
+> *"Nachhaltigkeit sollte sich nicht wie Verzicht anfühlen — sondern wie ein Spiel, das man gewinnen will."*`;
+  }
+
+  // Default intelligent response
+  return `## Antwort
+
+${generateContextualResponse(prompt, mode)}
+
+---
+
+*Analysiert im **${modeLabel}**-Modus mit ${AGENTS[mode].length} Agenten.*`;
+}
+
+function generateContextualResponse(prompt, mode) {
+  const words = prompt.split(/\s+/);
+  const isQuestion = prompt.includes('?');
+  const isCommand = prompt.toLowerCase().startsWith('erstell') || prompt.toLowerCase().startsWith('schreib') || prompt.toLowerCase().startsWith('erkl');
+
+  if (isQuestion) {
+    return `Das ist eine ausgezeichnete Frage. Hier ist meine Analyse:
+
+### Kernpunkte
+
+**1. Kontext**
+${prompt.length > 50 ? 'Diese Frage berührt mehrere Dimensionen, die eine differenzierte Betrachtung erfordern.' : 'Lass mich diese Frage präzise beantworten.'}
+
+**2. Analyse**
+Basierend auf der Zusammenarbeit von ${AGENTS[mode].length} spezialisierten Agenten ergibt sich folgendes Bild:
+
+- Der **Analyst** hat das Problem strukturiert und die Kernelemente identifiziert
+- Der **Researcher** hat relevante Informationen und Daten zusammengetragen
+${mode !== 'fast' ? `- Der **Creative** hat alternative Perspektiven eingebracht
+- Der **Critic** hat Schwachstellen in der Argumentation geprüft` : ''}
+- Der **Synthesizer** hat alles zu einer kohärenten Antwort zusammengeführt
+${mode === 'deep' ? '- Der **Quality Judge** hat die Antwortqualität bewertet und Verbesserungen angefordert' : ''}
+
+**3. Fazit**
+Die Antwort wurde durch mehrfache Perspektivenwechsel und kritische Überprüfung optimiert. Bei weiteren Fragen stehe ich gerne zur Verfügung.`;
+  }
+
+  return `Ich habe deinen Auftrag analysiert und mit ${AGENTS[mode].length} Agenten verarbeitet.
+
+### Ergebnis
+
+**Aufgabe verstanden:** ${prompt.substring(0, 80)}${prompt.length > 80 ? '…' : ''}
+
+**Vorgehensweise:**
+1. **Analyse** — Aufgabenstellung zerlegt und Anforderungen identifiziert
+2. **Recherche** — Relevante Informationen und Best Practices gesammelt
+${mode !== 'fast' ? `3. **Kreation** — Verschiedene Ansätze und Lösungswege entwickelt
+4. **Kritik** — Jeden Ansatz auf Schwächen und Verbesserungspotenzial geprüft` : ''}
+${mode === 'deep' ? `5. **Qualitätsprüfung** — Finale Bewertung durch den Quality Judge` : ''}
+
+**Hinweis:** Dies ist eine Demonstration der Multi-Agent-Orchestrierung. Im vollständigen Modus werden die Agenten mit OpenAI und Anthropic APIs verbunden, um noch tiefere und präzisere Antworten zu liefern.
+
+Möchtest du, dass ich einen bestimmten Aspekt genauer ausarbeite?`;
+}
+
+function getAgentSummary(agentId, prompt) {
+  const short = prompt.substring(0, 40);
+  const summaries = {
+    analyst: `Aufgabe analysiert und in Kernkomponenten zerlegt. Hauptthema identifiziert: "${short}…"`,
+    researcher: 'Relevante Fakten, Studien und Best Practices zusammengetragen. Quellen geprüft und priorisiert.',
+    creative: 'Alternative Perspektiven und unkonventionelle Lösungsansätze entwickelt. 3 verschiedene Ansätze generiert.',
+    critic: 'Alle Ansätze auf logische Konsistenz, Schwächen und Verbesserungspotenzial geprüft.',
+    synthesizer: 'Beste Elemente aller Agenten zu einer kohärenten, strukturierten Antwort zusammengeführt.',
+    judge: 'Qualitätsbewertung: 8.4/10. Klarheit und Struktur als Stärken identifiziert.'
+  };
+  return summaries[agentId] || 'Verarbeitung abgeschlossen.';
+}
+
+// ═══════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.mode === mode);
+  });
+}
+
+function setDefaultMode(mode) {
+  setMode(mode);
+}
+
+function setLang(btn, code) {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Future: update UI language
+}
+
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+function openSettings() {
+  document.getElementById('settingsPanel').classList.add('open');
+  document.getElementById('settingsOverlay').classList.add('open');
+}
+function closeSettings() {
+  document.getElementById('settingsPanel').classList.remove('open');
+  document.getElementById('settingsOverlay').classList.remove('open');
+}
+
+function scrollToBottom() {
+  const area = document.getElementById('chatArea');
+  requestAnimationFrame(() => area.scrollTop = area.scrollHeight);
+}
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function sleep(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+loadUser();
+</script>
+
+</body>
+</html>

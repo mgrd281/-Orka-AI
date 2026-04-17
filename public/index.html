@@ -370,97 +370,6 @@
     .price-btn-primary { background: var(--gradient-primary); color: white; }
     .price-btn-secondary { background: var(--surface-elevated); color: var(--text-primary); border: 1px solid var(--border); }
 
-    /* ── Modal ── */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 999;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease;
-      padding: 24px;
-    }
-    .modal-overlay.active { opacity: 1; pointer-events: all; }
-    .modal {
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 48px 40px;
-      max-width: 460px; width: 100%;
-      text-align: center;
-      transform: translateY(20px) scale(0.97);
-      transition: transform 0.3s ease;
-    }
-    .modal-overlay.active .modal { transform: translateY(0) scale(1); }
-    .modal-icon {
-      width: 64px; height: 64px;
-      background: var(--gradient-primary);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px; font-weight: 800; color: white;
-      margin: 0 auto 24px;
-      box-shadow: 0 0 40px rgba(108,92,231,0.3);
-    }
-    .modal h3 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-    .modal p { font-size: 14px; color: var(--text-secondary); margin-bottom: 28px; line-height: 1.6; }
-    .modal-form { display: flex; gap: 10px; }
-    .modal-input {
-      flex: 1; padding: 14px 18px;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: white; font-size: 15px;
-      font-family: 'Inter', sans-serif;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .modal-input:focus { border-color: var(--primary); }
-    .modal-input::placeholder { color: var(--text-tertiary); }
-    .modal-submit {
-      padding: 14px 24px;
-      background: var(--gradient-primary);
-      color: white; border: none;
-      border-radius: 12px;
-      font-size: 15px; font-weight: 600;
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      transition: opacity 0.2s;
-      white-space: nowrap;
-    }
-    .modal-submit:hover { opacity: 0.9; }
-    .modal-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-    .modal-close {
-      position: absolute; top: 16px; right: 20px;
-      background: none; border: none;
-      color: var(--text-tertiary); font-size: 24px;
-      cursor: pointer; padding: 4px;
-      transition: color 0.2s;
-    }
-    .modal-close:hover { color: var(--text-primary); }
-    .modal-success {
-      display: none;
-      flex-direction: column; align-items: center;
-    }
-    .modal-success.show { display: flex; }
-    .modal-success .check {
-      width: 56px; height: 56px;
-      background: rgba(0,196,140,0.12);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-    .modal-count {
-      margin-top: 20px;
-      font-size: 12px; color: var(--text-tertiary);
-    }
-    .modal-count span { color: var(--primary); font-weight: 600; }
-    @media (max-width: 480px) {
-      .modal { padding: 36px 24px; }
-      .modal-form { flex-direction: column; }
-    }
-
     /* ── Footer ── */
     footer {
       padding: 48px 0;
@@ -508,7 +417,7 @@
       <a href="#modi">Modi</a>
       <a href="#features">Features</a>
       <a href="#preise">Preise</a>
-      <a href="javascript:void(0)" class="nav-cta" onclick="openModal()">Jetzt starten</a>
+      <a href="/app" class="nav-cta">Jetzt starten</a>
     </div>
   </div>
 </nav>
@@ -528,7 +437,7 @@
       Orka AI orchestriert multiple KI-Agenten — Analyst, Researcher, Creative, Critic, Synthesizer — die zusammen denken, kritisieren und verfeinern. Für Antworten auf einem neuen Level.
     </p>
     <div class="hero-actions fade-in">
-      <a href="javascript:void(0)" class="btn-primary" onclick="openModal()">
+      <a href="/app" class="btn-primary">
         <span>Kostenlos starten</span>
         <span>→</span>
       </a>
@@ -644,7 +553,7 @@
           <li>Schnell-Modus</li>
           <li>Basis-Antworten</li>
         </ul>
-        <a href="javascript:void(0)" class="price-btn price-btn-secondary" onclick="openModal()">Kostenlos starten</a>
+        <a href="/app" class="price-btn price-btn-secondary">Kostenlos starten</a>
       </div>
       <div class="price-card popular fade-in">
         <div class="price-name">Pro</div>
@@ -656,7 +565,7 @@
           <li>Denkprozess-Anzeige</li>
           <li>Gesprächsexport</li>
         </ul>
-        <a href="javascript:void(0)" class="price-btn price-btn-primary" onclick="openModal()">Pro wählen</a>
+        <a href="/app" class="price-btn price-btn-primary">Pro wählen</a>
       </div>
       <div class="price-card fade-in">
         <div class="price-name">Premium</div>
@@ -668,7 +577,7 @@
           <li>Prioritäts-Verarbeitung</li>
           <li>Frühzugang zu Features</li>
         </ul>
-        <a href="javascript:void(0)" class="price-btn price-btn-secondary" onclick="openModal()">Premium wählen</a>
+        <a href="/app" class="price-btn price-btn-secondary">Premium wählen</a>
       </div>
     </div>
   </div>
@@ -681,35 +590,11 @@
     <p class="section-subtitle" style="margin-bottom: 40px;">
       Starte kostenlos — keine Kreditkarte nötig. Upgrade jederzeit.
     </p>
-    <a href="javascript:void(0)" class="btn-primary" style="font-size: 18px; padding: 18px 40px;" onclick="openModal()">
+    <a href="/app" class="btn-primary" style="font-size: 18px; padding: 18px 40px;">
       Jetzt kostenlos starten →
     </a>
   </div>
 </section>
-
-<!-- ── Signup Modal ── -->
-<div class="modal-overlay" id="signupModal">
-  <div class="modal" style="position: relative;">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    
-    <div id="modalForm">
-      <div class="modal-icon">O</div>
-      <h3>Früher Zugang sichern</h3>
-      <p>Orka AI startet bald. Trag dich ein und sei unter den Ersten, die koordinierte Intelligenz erleben.</p>
-      <form class="modal-form" onsubmit="handleSignup(event)">
-        <input type="email" class="modal-input" id="emailInput" placeholder="deine@email.de" required autocomplete="email">
-        <button type="submit" class="modal-submit" id="submitBtn">Eintragen</button>
-      </form>
-      <div class="modal-count">Bereits <span id="waitlistCount">847</span> auf der Warteliste</div>
-    </div>
-
-    <div class="modal-success" id="modalSuccess">
-      <div class="check">✓</div>
-      <h3>Du bist dabei!</h3>
-      <p style="margin-bottom: 0;">Wir benachrichtigen dich, sobald Orka AI verfügbar ist. Danke für dein Interesse!</p>
-    </div>
-  </div>
-</div>
 
 <!-- ── Footer ── -->
 <footer>
@@ -739,49 +624,7 @@
     observer.observe(el);
   });
 
-  // Modal
-  function openModal() {
-    document.getElementById('signupModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => document.getElementById('emailInput').focus(), 300);
-  }
 
-  function closeModal() {
-    document.getElementById('signupModal').classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  document.getElementById('signupModal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  function handleSignup(e) {
-    e.preventDefault();
-    const email = document.getElementById('emailInput').value;
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = '...';
-
-    // Store locally (replace with real API later)
-    const waitlist = JSON.parse(localStorage.getItem('orka_waitlist') || '[]');
-    if (!waitlist.includes(email)) {
-      waitlist.push(email);
-      localStorage.setItem('orka_waitlist', JSON.stringify(waitlist));
-    }
-
-    setTimeout(() => {
-      document.getElementById('modalForm').style.display = 'none';
-      document.getElementById('modalSuccess').classList.add('show');
-
-      // Update counter
-      const count = document.getElementById('waitlistCount');
-      if (count) count.textContent = parseInt(count.textContent) + 1;
-    }, 800);
-  }
 </script>
 
 </body>
