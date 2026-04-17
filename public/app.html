@@ -638,10 +638,169 @@
       color: var(--accent); font-weight: 600;
     }
 
+    /* ═══════════ ARTIFACT ═══════════ */
+    .artifact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 12px 0 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }
+    .artifact-tabs {
+      display: flex; border-bottom: 1px solid var(--border);
+      background: var(--bg-alt);
+    }
+    .artifact-tab {
+      padding: 10px 18px;
+      font-size: 12px; font-weight: 600;
+      color: var(--text-3);
+      border: none; background: none;
+      cursor: pointer; font-family: inherit;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .artifact-tab:hover { color: var(--text-2); }
+    .artifact-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .artifact-pane { display: none; }
+    .artifact-pane.active { display: block; }
+    .artifact-code {
+      position: relative;
+      max-height: 420px; overflow: auto;
+    }
+    .artifact-code pre {
+      margin: 0; padding: 16px;
+      background: var(--text); color: rgba(255,255,255,0.85);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; line-height: 1.6;
+      white-space: pre; overflow-x: auto;
+    }
+    .artifact-preview {
+      min-height: 200px; max-height: 480px;
+      background: white; overflow: auto;
+    }
+    .artifact-preview iframe {
+      width: 100%; height: 400px; border: none;
+      background: white;
+    }
+    .artifact-changes {
+      padding: 16px;
+    }
+    .artifact-changes textarea {
+      width: 100%; min-height: 80px; padding: 12px;
+      font-family: inherit; font-size: 13px;
+      border: 1px solid var(--border); border-radius: 10px;
+      resize: vertical; outline: none; background: var(--bg);
+      color: var(--text);
+    }
+    .artifact-changes textarea:focus { border-color: var(--accent); }
+    .artifact-changes-btn {
+      margin-top: 8px; padding: 9px 18px;
+      background: var(--accent); color: white;
+      border: none; border-radius: 10px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: opacity 0.2s;
+    }
+    .artifact-changes-btn:hover { opacity: 0.85; }
+    .artifact-actions {
+      display: flex; gap: 6px; padding: 10px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-alt);
+    }
+    .artifact-act {
+      display: flex; align-items: center; gap: 4px;
+      padding: 6px 12px;
+      background: none; border: 1px solid var(--border);
+      color: var(--text-2); font-size: 12px; font-weight: 500;
+      cursor: pointer; border-radius: 8px; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .artifact-act:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+    /* ═══════════ FILE UPLOAD ═══════════ */
+    .input-upload-btn {
+      width: 36px; height: 36px;
+      background: none; border: none;
+      color: var(--text-3); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px; flex-shrink: 0;
+      transition: color 0.2s, background 0.2s;
+      margin-bottom: 5px;
+    }
+    .input-upload-btn:hover { color: var(--accent); background: var(--accent-soft); }
+    .upload-preview-bar {
+      display: none; padding: 8px 16px 0;
+      flex-shrink: 0;
+    }
+    .upload-preview-bar.show { display: flex; gap: 8px; flex-wrap: wrap; }
+    .upload-thumb {
+      position: relative; display: inline-flex;
+      border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-alt);
+    }
+    .upload-thumb img, .upload-thumb video {
+      height: 64px; max-width: 120px;
+      object-fit: cover; display: block;
+    }
+    .upload-thumb .upload-info {
+      display: flex; flex-direction: column;
+      justify-content: center; padding: 6px 12px;
+      font-size: 12px; color: var(--text-2);
+    }
+    .upload-thumb .upload-info .fname { font-weight: 600; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .upload-thumb .upload-info .fsize { font-size: 11px; color: var(--text-3); }
+    .upload-thumb .upload-remove {
+      position: absolute; top: 3px; right: 3px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(0,0,0,0.5); color: white;
+      border: none; cursor: pointer;
+      font-size: 11px; display: flex;
+      align-items: center; justify-content: center;
+    }
+
+    /* ═══════════ VIDEO ANALYSIS ═══════════ */
+    .video-analysis-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      margin: 12px 0 4px;
+    }
+    .video-analysis-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 18px;
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+    }
+    .video-analysis-header .va-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--accent-soft);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .video-analysis-header .va-title { font-size: 14px; font-weight: 600; flex: 1; }
+    .video-analysis-header .va-cost { font-size: 12px; color: var(--text-3); }
+    .va-stages { padding: 16px; }
+    .va-stage {
+      display: flex; gap: 10px; padding: 8px 0;
+      font-size: 13px; color: var(--text-2);
+    }
+    .va-stage .va-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      margin-top: 6px; flex-shrink: 0;
+    }
+    .va-stage.done .va-dot { background: var(--green); }
+    .va-stage.active .va-dot { background: var(--accent); animation: thinkPulse 1.5s ease-in-out infinite; }
+    .va-stage.pending .va-dot { background: var(--border); }
+    .va-stage.done .va-text { color: var(--text-3); }
+    .va-stage.active .va-text { color: var(--text); font-weight: 500; }
+
     /* ── Responsive ── */
     @media (max-width: 600px) {
       .message-user .bubble { max-width: 88%; }
       .message-assistant .bubble { max-width: 95%; }
+      .artifact-preview iframe { height: 300px; }
     }
   </style>
 </head>
@@ -788,10 +947,16 @@
     <button class="mode-chip" data-mode="deep" onclick="setMode('deep')">Tief</button>
   </div>
 
+  <div class="upload-preview-bar" id="uploadPreviewBar"></div>
+
   <div class="input-bar">
     <div class="input-wrap">
+      <button class="input-upload-btn" onclick="document.getElementById('fileInput').click()" title="Bild oder Video hochladen">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+      </button>
       <textarea id="msgInput" rows="1" placeholder="Nachricht eingeben …" onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
     </div>
+    <input type="file" id="fileInput" accept="image/*,video/*" multiple hidden onchange="handleFileSelect(event)">
     <button class="send-btn" id="sendBtn" onclick="sendMessage()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </button>
@@ -804,6 +969,7 @@ let currentMode = 'smart';
 let conversations = [];
 let activeConvId = null;
 let isGenerating = false;
+let pendingFiles = []; // {file, type:'image'|'video', dataUrl, name, size}
 
 const AGENTS = {
   fast: [
@@ -826,6 +992,217 @@ const AGENTS = {
     { id: 'judge', name: 'Quality Judge', color: '#F59E0B' }
   ]
 };
+
+const VIDEO_STAGES = [
+  { id: 'upload', label: 'Upload verarbeiten' },
+  { id: 'metadata', label: 'Metadaten extrahieren' },
+  { id: 'keyframes', label: 'Schlüsselbilder analysieren' },
+  { id: 'transcription', label: 'Audio transkribieren (optional)' },
+  { id: 'summary', label: 'Strukturierte Zusammenfassung' }
+];
+
+// ═══ FILE UPLOAD ═══
+
+function handleFileSelect(e) {
+  const files = Array.from(e.target.files);
+  files.forEach(f => {
+    const type = f.type.startsWith('video/') ? 'video' : 'image';
+    if (type === 'image' && f.size > 20 * 1024 * 1024) return alert('Bild zu groß (max 20 MB).');
+    if (type === 'video' && f.size > 100 * 1024 * 1024) return alert('Video zu groß (max 100 MB).');
+    const reader = new FileReader();
+    reader.onload = () => {
+      pendingFiles.push({ file: f, type, dataUrl: reader.result, name: f.name, size: f.size });
+      renderUploadPreviews();
+    };
+    reader.readAsDataURL(f);
+  });
+  e.target.value = '';
+}
+
+function renderUploadPreviews() {
+  const bar = document.getElementById('uploadPreviewBar');
+  if (pendingFiles.length === 0) { bar.classList.remove('show'); bar.innerHTML = ''; return; }
+  bar.classList.add('show');
+  bar.innerHTML = pendingFiles.map((f, i) => {
+    const sizeStr = f.size > 1024*1024 ? (f.size/1024/1024).toFixed(1)+' MB' : (f.size/1024).toFixed(0)+' KB';
+    const media = f.type === 'video'
+      ? `<video src="${f.dataUrl}" muted></video>`
+      : `<img src="${f.dataUrl}" alt="">`;
+    return `<div class="upload-thumb">
+      ${media}
+      <div class="upload-info"><div class="fname">${escapeHtml(f.name)}</div><div class="fsize">${sizeStr}</div></div>
+      <button class="upload-remove" onclick="removePendingFile(${i})">×</button>
+    </div>`;
+  }).join('');
+}
+
+function removePendingFile(i) {
+  pendingFiles.splice(i, 1);
+  renderUploadPreviews();
+}
+
+// ═══ ARTIFACT DETECTION ═══
+
+function detectCodeArtifact(content) {
+  // Check if response is mainly code (has large fenced code blocks)
+  const codeBlockRegex = /```(\w*)\n([\s\S]*?)```/g;
+  const blocks = [];
+  let match;
+  while ((match = codeBlockRegex.exec(content)) !== null) {
+    blocks.push({ lang: match[1] || 'text', code: match[2].trim() });
+  }
+  if (blocks.length === 0) return null;
+  // If code is >40% of response or single block is >200 chars, treat as artifact
+  const totalCode = blocks.reduce((s, b) => s + b.code.length, 0);
+  if (totalCode > content.length * 0.4 || blocks.some(b => b.code.length > 200)) {
+    return blocks;
+  }
+  return null;
+}
+
+function isPreviewable(lang, code) {
+  const lower = lang.toLowerCase();
+  if (['html', 'htm'].includes(lower)) return true;
+  if (['css', 'javascript', 'js'].includes(lower) && code.includes('<')) return false;
+  // Check if code contains full HTML structure
+  if (code.includes('<!DOCTYPE') || code.includes('<html') || (code.includes('<div') && code.includes('<style'))) return true;
+  return false;
+}
+
+function buildArtifactCard(blocks, msgId) {
+  const mainBlock = blocks[0];
+  const allCode = blocks.map(b => (b.lang ? `/* ${b.lang} */\n` : '') + b.code).join('\n\n');
+  const canPreview = blocks.some(b => isPreviewable(b.lang, b.code));
+
+  let tabsHtml = `<button class="artifact-tab active" onclick="switchArtifactTab(this,'code','${msgId}')">Code</button>`;
+  if (canPreview) {
+    tabsHtml += `<button class="artifact-tab" onclick="switchArtifactTab(this,'preview','${msgId}')">Vorschau</button>`;
+  }
+  tabsHtml += `<button class="artifact-tab" onclick="switchArtifactTab(this,'changes','${msgId}')">Änderungen</button>`;
+
+  let previewHtml = '';
+  if (canPreview) {
+    previewHtml = `<div class="artifact-pane" data-pane="preview"><div class="artifact-preview"><iframe id="preview_${msgId}" sandbox="allow-scripts" loading="lazy"></iframe></div></div>`;
+  }
+
+  return `<div class="artifact-card" id="artifact_${msgId}">
+    <div class="artifact-tabs">${tabsHtml}</div>
+    <div class="artifact-pane active" data-pane="code">
+      <div class="artifact-code"><pre><code>${escapeHtml(allCode)}</code></pre></div>
+    </div>
+    ${previewHtml}
+    <div class="artifact-pane" data-pane="changes">
+      <div class="artifact-changes">
+        <textarea placeholder="Beschreibe die gewünschten Änderungen …" id="changes_${msgId}"></textarea>
+        <button class="artifact-changes-btn" onclick="requestArtifactChanges('${msgId}')">Änderungen anwenden</button>
+      </div>
+    </div>
+    <div class="artifact-actions">
+      <button class="artifact-act" onclick="copyArtifactCode('${msgId}')">📋 Kopieren</button>
+      <button class="artifact-act" onclick="regenerateArtifact('${msgId}')">🔄 Neu generieren</button>
+      ${canPreview ? `<button class="artifact-act" onclick="openPreviewFull('${msgId}')">↗ Vollbild</button>` : ''}
+    </div>
+  </div>`;
+}
+
+function switchArtifactTab(tabEl, pane, msgId) {
+  const card = document.getElementById('artifact_' + msgId);
+  card.querySelectorAll('.artifact-tab').forEach(t => t.classList.remove('active'));
+  card.querySelectorAll('.artifact-pane').forEach(p => p.classList.remove('active'));
+  tabEl.classList.add('active');
+  const target = card.querySelector(`[data-pane="${pane}"]`);
+  if (target) target.classList.add('active');
+  // Lazy-load preview iframe
+  if (pane === 'preview') {
+    const iframe = document.getElementById('preview_' + msgId);
+    if (iframe && !iframe.dataset.loaded) {
+      const code = card.querySelector('.artifact-code pre code').textContent;
+      loadPreview(iframe, code);
+      iframe.dataset.loaded = '1';
+    }
+  }
+}
+
+function loadPreview(iframe, code) {
+  // Build safe HTML for preview
+  let html = code;
+  if (!code.includes('<html') && !code.includes('<!DOCTYPE')) {
+    html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${code}</body></html>`;
+  }
+  iframe.srcdoc = html;
+}
+
+function copyArtifactCode(msgId) {
+  const card = document.getElementById('artifact_' + msgId);
+  const code = card.querySelector('.artifact-code pre code').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = card.querySelector('.artifact-actions .artifact-act');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓ Kopiert';
+    setTimeout(() => btn.innerHTML = orig, 2000);
+  });
+}
+
+function regenerateArtifact(msgId) {
+  // Find the original user message and resend
+  const conv = conversations.find(c => c.id === activeConvId);
+  if (!conv) return;
+  const assistantIdx = conv.messages.findIndex(m => m.artifactId === msgId);
+  if (assistantIdx < 1) return;
+  const userMsg = conv.messages[assistantIdx - 1];
+  if (userMsg && userMsg.role === 'user') {
+    document.getElementById('msgInput').value = userMsg.content;
+    sendMessage();
+  }
+}
+
+function requestArtifactChanges(msgId) {
+  const changes = document.getElementById('changes_' + msgId).value.trim();
+  if (!changes) return;
+  const card = document.getElementById('artifact_' + msgId);
+  const code = card.querySelector('.artifact-code pre code').textContent;
+  const prompt = `Hier ist der bestehende Code:\n\n\`\`\`\n${code}\n\`\`\`\n\nBitte wende folgende Änderungen an:\n${changes}\n\nGib nur den aktualisierten Code zurück.`;
+  document.getElementById('msgInput').value = prompt;
+  document.getElementById('changes_' + msgId).value = '';
+  switchArtifactTab(card.querySelector('.artifact-tab'), 'code', msgId);
+  sendMessage();
+}
+
+function openPreviewFull(msgId) {
+  const card = document.getElementById('artifact_' + msgId);
+  const code = card.querySelector('.artifact-code pre code').textContent;
+  const w = window.open('', '_blank');
+  if (w) { w.document.write(code); w.document.close(); }
+}
+
+// ═══ VIDEO ANALYSIS UI ═══
+
+function buildVideoAnalysisCard(analysisId) {
+  return `<div class="video-analysis-card" id="va_${analysisId}">
+    <div class="video-analysis-header">
+      <div class="va-icon">🎬</div>
+      <div class="va-title">Video-Analyse</div>
+      <div class="va-cost">Kosteneffizient</div>
+    </div>
+    <div class="va-stages">
+      ${VIDEO_STAGES.map((s, i) => `<div class="va-stage ${i === 0 ? 'active' : 'pending'}" id="va_${analysisId}_${s.id}">
+        <div class="va-dot"></div>
+        <div class="va-text">${s.label}</div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function updateVideoStage(analysisId, stageIdx) {
+  VIDEO_STAGES.forEach((s, i) => {
+    const el = document.getElementById(`va_${analysisId}_${s.id}`);
+    if (!el) return;
+    el.className = 'va-stage ' + (i < stageIdx ? 'done' : i === stageIdx ? 'active' : 'pending');
+    if (i < stageIdx) el.querySelector('.va-text').innerHTML = s.label + ' ✓';
+  });
+}
+
+// ═══ AUTH ═══
 
 function loadUser() {
   const u = localStorage.getItem('orka_user');
@@ -896,6 +1273,8 @@ function showApp() {
   document.getElementById('msgInput').focus();
 }
 
+// ═══ CONVERSATIONS ═══
+
 function loadConversations() {
   conversations = JSON.parse(localStorage.getItem('orka_convs_' + currentUser.email) || '[]');
   renderConvList();
@@ -912,6 +1291,7 @@ function newConversation() {
   document.getElementById('emptyState').style.display = '';
   document.getElementById('emptyState').classList.remove('hidden');
   document.getElementById('msgInput').focus();
+  pendingFiles = []; renderUploadPreviews();
   closeSidebar();
   renderConvList();
 }
@@ -924,8 +1304,8 @@ function openConversation(id) {
   const container = document.getElementById('messagesContainer');
   container.innerHTML = '';
   conv.messages.forEach(msg => {
-    if (msg.role === 'user') addUserBubble(msg.content);
-    else addAssistantBubble(msg.content, msg.reasoning);
+    if (msg.role === 'user') addUserBubble(msg.content, msg.attachments);
+    else addAssistantBubble(msg.content, msg.reasoning, msg.artifactId);
   });
   closeSidebar();
   scrollToBottom();
@@ -973,70 +1353,40 @@ function autoResize(el) {
   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
 }
 
+// ═══ SEND MESSAGE ═══
+
 async function sendMessage() {
   const input = document.getElementById('msgInput');
   const content = input.value.trim();
-  if (!content || isGenerating) return;
+  if ((!content && pendingFiles.length === 0) || isGenerating) return;
   isGenerating = true;
   document.getElementById('sendBtn').disabled = true;
   document.getElementById('emptyState').style.display = 'none';
-  const conv = getOrCreateConv(content);
-  conv.messages.push({ role: 'user', content });
+
+  const attachedFiles = [...pendingFiles];
+  pendingFiles = []; renderUploadPreviews();
+
+  const displayContent = content || (attachedFiles.length > 0 ? `[${attachedFiles.map(f => f.name).join(', ')}]` : '');
+  const conv = getOrCreateConv(displayContent);
+
+  // Build attachments array (store compact info, not full dataUrl in conversation)
+  const attachments = attachedFiles.map(f => ({ name: f.name, type: f.type, size: f.size }));
+  conv.messages.push({ role: 'user', content: displayContent, attachments });
   saveConversations();
-  addUserBubble(content);
+  addUserBubble(displayContent, attachments);
   input.value = ''; input.style.height = 'auto';
   scrollToBottom();
 
-  const thinkingEl = showThinking();
-  scrollToBottom();
-  const agents = AGENTS[currentMode];
+  // Check for video files — use staged analysis
+  const videos = attachedFiles.filter(f => f.type === 'video');
+  const images = attachedFiles.filter(f => f.type === 'image');
 
-  // Start thinking animation
-  let thinkIdx = 0;
-  const thinkInterval = setInterval(() => {
-    if (thinkIdx < agents.length) {
-      updateThinking(thinkingEl, agents, thinkIdx);
-      scrollToBottom();
-      thinkIdx++;
-    }
-  }, currentMode === 'fast' ? 1000 : currentMode === 'deep' ? 2500 : 1500);
-
-  try {
-    // Call real API
-    const history = conv.messages.slice(-10);
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: content, mode: currentMode, history })
-    });
-
-    clearInterval(thinkInterval);
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Serverfehler');
-    }
-
-    const data = await res.json();
-
-    // Map reasoning with agent colors
-    const reasoning = (data.reasoning || []).map(r => {
-      const agentDef = agents.find(a => a.id === r.agent);
-      return { ...r, color: agentDef ? agentDef.color : '#4318FF' };
-    });
-
-    thinkingEl.remove();
-    conv.messages.push({ role: 'assistant', content: data.response, reasoning });
-    saveConversations();
-    addAssistantBubble(data.response, reasoning);
-
-  } catch (err) {
-    clearInterval(thinkInterval);
-    thinkingEl.remove();
-    const errMsg = '**Fehler:** ' + (err.message || 'Verbindung fehlgeschlagen. Bitte versuche es erneut.');
-    conv.messages.push({ role: 'assistant', content: errMsg, reasoning: [] });
-    saveConversations();
-    addAssistantBubble(errMsg, []);
+  if (videos.length > 0) {
+    await handleVideoAnalysis(conv, videos[0], content);
+  } else if (images.length > 0) {
+    await handleImageAnalysis(conv, images, content);
+  } else {
+    await handleTextChat(conv, content);
   }
 
   scrollToBottom();
@@ -1045,20 +1395,253 @@ async function sendMessage() {
   document.getElementById('msgInput').focus();
 }
 
-function addUserBubble(content) {
+// ═══ TEXT CHAT (existing flow + artifact detection) ═══
+
+async function handleTextChat(conv, content) {
+  const thinkingEl = showThinking();
+  scrollToBottom();
+  const agents = AGENTS[currentMode];
+  let thinkIdx = 0;
+  const thinkInterval = setInterval(() => {
+    if (thinkIdx < agents.length) { updateThinking(thinkingEl, agents, thinkIdx); scrollToBottom(); thinkIdx++; }
+  }, currentMode === 'fast' ? 1000 : currentMode === 'deep' ? 2500 : 1500);
+
+  try {
+    const history = conv.messages.slice(-10);
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: content, mode: currentMode, history })
+    });
+    clearInterval(thinkInterval);
+    if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || 'Serverfehler'); }
+    const data = await res.json();
+    const reasoning = (data.reasoning || []).map(r => {
+      const agentDef = agents.find(a => a.id === r.agent);
+      return { ...r, color: agentDef ? agentDef.color : '#4318FF' };
+    });
+    thinkingEl.remove();
+
+    // Check for code artifact
+    const artifactId = 'art_' + Date.now() + Math.random().toString(36).substr(2,4);
+    conv.messages.push({ role: 'assistant', content: data.response, reasoning, artifactId });
+    saveConversations();
+    addAssistantBubble(data.response, reasoning, artifactId);
+  } catch (err) {
+    clearInterval(thinkInterval);
+    thinkingEl.remove();
+    const errMsg = '**Fehler:** ' + (err.message || 'Verbindung fehlgeschlagen.');
+    conv.messages.push({ role: 'assistant', content: errMsg, reasoning: [] });
+    saveConversations();
+    addAssistantBubble(errMsg, []);
+  }
+}
+
+// ═══ IMAGE ANALYSIS ═══
+
+async function handleImageAnalysis(conv, images, userText) {
+  const thinkingEl = showThinking();
+  scrollToBottom();
+  const agents = AGENTS[currentMode];
+  let thinkIdx = 0;
+  const thinkInterval = setInterval(() => {
+    if (thinkIdx < agents.length) { updateThinking(thinkingEl, agents, thinkIdx); scrollToBottom(); thinkIdx++; }
+  }, 1500);
+
+  try {
+    // Send images as base64 to the analyze endpoint
+    const imagePayloads = images.map(img => ({
+      data: img.dataUrl,
+      name: img.name,
+      type: img.file.type
+    }));
+
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'image',
+        images: imagePayloads,
+        message: userText || 'Analysiere dieses Bild detailliert.',
+        mode: currentMode
+      })
+    });
+    clearInterval(thinkInterval);
+    if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || 'Analysefehler'); }
+    const data = await res.json();
+    const reasoning = (data.reasoning || []).map(r => {
+      const agentDef = agents.find(a => a.id === r.agent);
+      return { ...r, color: agentDef ? agentDef.color : '#4318FF' };
+    });
+    thinkingEl.remove();
+    const artifactId = 'art_' + Date.now() + Math.random().toString(36).substr(2,4);
+    conv.messages.push({ role: 'assistant', content: data.response, reasoning, artifactId });
+    saveConversations();
+    addAssistantBubble(data.response, reasoning, artifactId);
+  } catch (err) {
+    clearInterval(thinkInterval);
+    thinkingEl.remove();
+    const errMsg = '**Fehler bei Bildanalyse:** ' + (err.message || 'Bitte versuche es erneut.');
+    conv.messages.push({ role: 'assistant', content: errMsg, reasoning: [] });
+    saveConversations();
+    addAssistantBubble(errMsg, []);
+  }
+}
+
+// ═══ VIDEO ANALYSIS (staged, cost-aware) ═══
+
+async function handleVideoAnalysis(conv, video, userText) {
+  const analysisId = 'va_' + Date.now();
+  const container = document.getElementById('messagesContainer');
+
+  // Show staged card
+  const cardDiv = document.createElement('div');
+  cardDiv.className = 'message message-assistant';
+  cardDiv.innerHTML = `<div class="bubble" style="padding:0;border:none;background:none;">${buildVideoAnalysisCard(analysisId)}</div>`;
+  container.appendChild(cardDiv);
+  scrollToBottom();
+
+  try {
+    // Stage 1: Upload
+    updateVideoStage(analysisId, 0);
+    await sleep(500);
+
+    // Stage 2: Metadata
+    updateVideoStage(analysisId, 1);
+    const metadata = {
+      name: video.name,
+      size: video.size,
+      type: video.file.type,
+      sizeStr: video.size > 1024*1024 ? (video.size/1024/1024).toFixed(1)+' MB' : (video.size/1024).toFixed(0)+' KB'
+    };
+    // Extract duration from video element
+    const duration = await getVideoDuration(video.dataUrl);
+    metadata.duration = duration;
+    await sleep(400);
+
+    // Stage 3: Keyframes — extract first frame as image for analysis
+    updateVideoStage(analysisId, 2);
+    const keyframe = await extractVideoFrame(video.dataUrl, 1);
+    await sleep(400);
+
+    // Stage 4: Transcription (skip for cost — note in response)
+    updateVideoStage(analysisId, 3);
+    await sleep(300);
+
+    // Stage 5: Summary — send keyframe + metadata to AI
+    updateVideoStage(analysisId, 4);
+
+    const prompt = `Video-Analyse:
+- Dateiname: ${metadata.name}
+- Größe: ${metadata.sizeStr}
+- Typ: ${metadata.type}
+- Dauer: ${duration ? duration.toFixed(1) + 's' : 'unbekannt'}
+
+${userText ? 'Benutzerfrage: ' + userText : 'Analysiere das Video basierend auf dem Schlüsselbild.'}
+
+Erstelle eine strukturierte Analyse mit: Inhaltsbeschreibung, erkennbare Elemente, Qualitätsbewertung, und Empfehlungen.`;
+
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'image',
+        images: keyframe ? [{ data: keyframe, name: 'keyframe.png', type: 'image/png' }] : [],
+        message: prompt,
+        mode: currentMode
+      })
+    });
+
+    if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error || 'Analysefehler'); }
+    const data = await res.json();
+
+    // Mark all stages done
+    VIDEO_STAGES.forEach((_, i) => updateVideoStage(analysisId, VIDEO_STAGES.length));
+
+    // Add cost note
+    const costNote = '\n\n---\n*Kosteneffiziente Analyse: Schlüsselbild-basiert. Audio-Transkription wurde übersprungen.*';
+    const fullResponse = data.response + costNote;
+
+    const artifactId = 'art_' + Date.now() + Math.random().toString(36).substr(2,4);
+    conv.messages.push({ role: 'assistant', content: fullResponse, reasoning: data.reasoning || [], artifactId });
+    saveConversations();
+
+    // Replace analysis card with final response
+    await sleep(600);
+    cardDiv.remove();
+    addAssistantBubble(fullResponse, data.reasoning || [], artifactId);
+
+  } catch (err) {
+    cardDiv.remove();
+    const errMsg = '**Fehler bei Video-Analyse:** ' + (err.message || 'Bitte versuche es erneut.');
+    conv.messages.push({ role: 'assistant', content: errMsg, reasoning: [] });
+    saveConversations();
+    addAssistantBubble(errMsg, []);
+  }
+}
+
+function getVideoDuration(dataUrl) {
+  return new Promise(resolve => {
+    const v = document.createElement('video');
+    v.preload = 'metadata';
+    v.onloadedmetadata = () => { resolve(v.duration); URL.revokeObjectURL(v.src); };
+    v.onerror = () => resolve(null);
+    v.src = dataUrl;
+  });
+}
+
+function extractVideoFrame(dataUrl, timeSec) {
+  return new Promise(resolve => {
+    const v = document.createElement('video');
+    v.preload = 'auto';
+    v.muted = true;
+    v.onloadeddata = () => {
+      v.currentTime = Math.min(timeSec, v.duration || 1);
+    };
+    v.onseeked = () => {
+      try {
+        const c = document.createElement('canvas');
+        c.width = Math.min(v.videoWidth, 1280);
+        c.height = Math.min(v.videoHeight, 720);
+        c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+        resolve(c.toDataURL('image/png', 0.8));
+      } catch { resolve(null); }
+    };
+    v.onerror = () => resolve(null);
+    v.src = dataUrl;
+  });
+}
+
+// ═══ BUBBLES ═══
+
+function addUserBubble(content, attachments) {
   const container = document.getElementById('messagesContainer');
   const div = document.createElement('div');
   div.className = 'message message-user';
-  div.innerHTML = `<div class="bubble">${escapeHtml(content)}</div>`;
+  let attachHtml = '';
+  if (attachments && attachments.length > 0) {
+    attachHtml = `<div style="display:flex;gap:4px;margin-bottom:6px;flex-wrap:wrap">${attachments.map(a =>
+      `<span style="background:rgba(255,255,255,0.15);padding:3px 8px;border-radius:6px;font-size:11px">📎 ${escapeHtml(a.name)}</span>`
+    ).join('')}</div>`;
+  }
+  div.innerHTML = `<div class="bubble">${attachHtml}${escapeHtml(content)}</div>`;
   container.appendChild(div);
 }
 
-function addAssistantBubble(content, reasoning) {
+function addAssistantBubble(content, reasoning, artifactId) {
   const container = document.getElementById('messagesContainer');
   const div = document.createElement('div');
   div.className = 'message message-assistant';
   const renderedContent = typeof marked !== 'undefined' ? marked.parse(content) : escapeHtml(content);
   const reasoningId = 'reason_' + Date.now() + Math.random().toString(36).substr(2,4);
+
+  // Check for code artifact
+  const blocks = detectCodeArtifact(content);
+  let artifactHtml = '';
+  if (blocks && artifactId) {
+    artifactHtml = buildArtifactCard(blocks, artifactId);
+  }
+
   let reasoningHtml = '';
   if (reasoning && reasoning.length > 0) {
     reasoningHtml = `
@@ -1068,9 +1651,9 @@ function addAssistantBubble(content, reasoning) {
       <div class="reasoning-panel" id="${reasoningId}">
         ${reasoning.map(r => `
           <div class="reasoning-step">
-            <div class="agent-dot" style="background:${r.color}"></div>
+            <div class="agent-dot" style="background:${r.color || '#4318FF'}"></div>
             <div>
-              <div class="agent-name" style="color:${r.color}">${r.name}</div>
+              <div class="agent-name" style="color:${r.color || '#4318FF'}">${escapeHtml(r.name || r.agent)}</div>
               <div class="agent-text">${escapeHtml(r.summary)}</div>
             </div>
           </div>
@@ -1080,6 +1663,7 @@ function addAssistantBubble(content, reasoning) {
   }
   div.innerHTML = `
     <div class="bubble">${renderedContent}</div>
+    ${artifactHtml}
     <div class="msg-actions">
       <button class="msg-action" onclick="copyMessage(this)">Kopieren</button>
       ${reasoningHtml}
@@ -1099,6 +1683,8 @@ function copyMessage(btn) {
     setTimeout(() => btn.textContent = 'Kopieren', 2000);
   });
 }
+
+// ═══ THINKING ═══
 
 function showThinking() {
   const container = document.getElementById('messagesContainer');
@@ -1127,6 +1713,8 @@ function updateThinking(el, agents, currentIdx) {
     }
   }).join('');
 }
+
+// ═══ UI CONTROLS ═══
 
 function setMode(mode) {
   currentMode = mode;
