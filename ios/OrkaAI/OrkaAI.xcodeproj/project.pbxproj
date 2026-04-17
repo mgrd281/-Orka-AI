@@ -1,0 +1,447 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		09BAAA6DEB21F147F793F05F /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DEC9D55FD5880A3F83197B /* ChatView.swift */; };
+		0CEBB3D45692BC4B8CFEE4DE /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F74B2A1CD716FC70B795B3 /* MessageBubble.swift */; };
+		132442E2798FC3CD9CA47063 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33022811128C1964815E658 /* SidebarView.swift */; };
+		42ECA4CCD610EA4C0FF3DE88 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DAD0CBC1214A4879848C947 /* AuthView.swift */; };
+		49CD53F95FAE570777689584 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDE5CB17C12C83D41C1FAFF /* ChatViewModel.swift */; };
+		568CA3308EAD7EDAE4B04BBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87C99D24A4F572A85519439B /* Assets.xcassets */; };
+		6DC03D08B10991D7569D216B /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F6633BB64E73CFA4A9A45 /* APIService.swift */; };
+		77DE2964B02B5D8F8B59E34A /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7DDBCFEFA8396D2D5B18F7 /* AuthViewModel.swift */; };
+		7A89C9C0BA2AFCABDD0EA73A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6E3E16443D299418E038B0 /* SettingsView.swift */; };
+		84139328BF9E5FAE2BAD2110 /* OrkaAIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A0F277FE7C4513F64FDFE7 /* OrkaAIApp.swift */; };
+		90AD4587C6DEEB6D82E2A2EF /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E378C33109B2E904CBCC4 /* Models.swift */; };
+		DE8B391EBF1399DCFC996DA2 /* ThinkingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB09A7B1AAA24B22D50795A0 /* ThinkingCard.swift */; };
+		EB23F3DAAD31740EE39108C8 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15308ECFD8D0EBB9D75FBA1 /* StorageService.swift */; };
+		EB32CE45BA5E2EEBD3B94FA3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A48F37C256D8FFFA113F8 /* Colors.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		32DEC9D55FD5880A3F83197B /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		3B3F6633BB64E73CFA4A9A45 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		569A48F37C256D8FFFA113F8 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		68A0F277FE7C4513F64FDFE7 /* OrkaAIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrkaAIApp.swift; sourceTree = "<group>"; };
+		6DAD0CBC1214A4879848C947 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		78F74B2A1CD716FC70B795B3 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
+		87C99D24A4F572A85519439B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		96FB71CED3EA40764B808C1A /* OrkaAI.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OrkaAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C15308ECFD8D0EBB9D75FBA1 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		CA6E3E16443D299418E038B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		EA7DDBCFEFA8396D2D5B18F7 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		EB09A7B1AAA24B22D50795A0 /* ThinkingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkingCard.swift; sourceTree = "<group>"; };
+		ECDE5CB17C12C83D41C1FAFF /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		F33022811128C1964815E658 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		F69E378C33109B2E904CBCC4 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		25D961730119E2A8037EF7FC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3B3F6633BB64E73CFA4A9A45 /* APIService.swift */,
+				C15308ECFD8D0EBB9D75FBA1 /* StorageService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		521AE02B78239F2F50E47296 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				CA6E3E16443D299418E038B0 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		7B2E8770065C369511AB020D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C13756797D2F95947475534A /* Auth */,
+				E1B60B129AFB30C3BAD4E836 /* Chat */,
+				AF483259775E9E24E8992C1C /* Components */,
+				521AE02B78239F2F50E47296 /* Settings */,
+				F9836DBFDCB21117CBD0DC4F /* Sidebar */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		80B665E40457354C1A8DC638 /* OrkaAI */ = {
+			isa = PBXGroup;
+			children = (
+				87C99D24A4F572A85519439B /* Assets.xcassets */,
+				68A0F277FE7C4513F64FDFE7 /* OrkaAIApp.swift */,
+				ADD92757E96FEEEF61E3DF66 /* Models */,
+				25D961730119E2A8037EF7FC /* Services */,
+				83B74A45D08757380F8C10D0 /* Utils */,
+				7B2E8770065C369511AB020D /* Views */,
+			);
+			path = OrkaAI;
+			sourceTree = "<group>";
+		};
+		83B74A45D08757380F8C10D0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				569A48F37C256D8FFFA113F8 /* Colors.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		8D90CE922BA52C20DA97FB22 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				96FB71CED3EA40764B808C1A /* OrkaAI.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ADD92757E96FEEEF61E3DF66 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F69E378C33109B2E904CBCC4 /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AF483259775E9E24E8992C1C /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				78F74B2A1CD716FC70B795B3 /* MessageBubble.swift */,
+				EB09A7B1AAA24B22D50795A0 /* ThinkingCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		B847EA8980995CC29B64C81D = {
+			isa = PBXGroup;
+			children = (
+				80B665E40457354C1A8DC638 /* OrkaAI */,
+				8D90CE922BA52C20DA97FB22 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C13756797D2F95947475534A /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				6DAD0CBC1214A4879848C947 /* AuthView.swift */,
+				EA7DDBCFEFA8396D2D5B18F7 /* AuthViewModel.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		E1B60B129AFB30C3BAD4E836 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				32DEC9D55FD5880A3F83197B /* ChatView.swift */,
+				ECDE5CB17C12C83D41C1FAFF /* ChatViewModel.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		F9836DBFDCB21117CBD0DC4F /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				F33022811128C1964815E658 /* SidebarView.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9297132129FF242E1674121 /* OrkaAI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9086B7042EA064CAD704691 /* Build configuration list for PBXNativeTarget "OrkaAI" */;
+			buildPhases = (
+				C459C6209D7CF324A2EF1E95 /* Sources */,
+				8F91E8653E7A3D6D2ADC02B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OrkaAI;
+			packageProductDependencies = (
+			);
+			productName = OrkaAI;
+			productReference = 96FB71CED3EA40764B808C1A /* OrkaAI.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		05DD1DC5D06D37937262ED5F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					D9297132129FF242E1674121 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = B57839BB4C36BE87827253B4 /* Build configuration list for PBXProject "OrkaAI" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = B847EA8980995CC29B64C81D;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8D90CE922BA52C20DA97FB22 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9297132129FF242E1674121 /* OrkaAI */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8F91E8653E7A3D6D2ADC02B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				568CA3308EAD7EDAE4B04BBF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C459C6209D7CF324A2EF1E95 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DC03D08B10991D7569D216B /* APIService.swift in Sources */,
+				42ECA4CCD610EA4C0FF3DE88 /* AuthView.swift in Sources */,
+				77DE2964B02B5D8F8B59E34A /* AuthViewModel.swift in Sources */,
+				09BAAA6DEB21F147F793F05F /* ChatView.swift in Sources */,
+				49CD53F95FAE570777689584 /* ChatViewModel.swift in Sources */,
+				EB32CE45BA5E2EEBD3B94FA3 /* Colors.swift in Sources */,
+				0CEBB3D45692BC4B8CFEE4DE /* MessageBubble.swift in Sources */,
+				90AD4587C6DEEB6D82E2A2EF /* Models.swift in Sources */,
+				84139328BF9E5FAE2BAD2110 /* OrkaAIApp.swift in Sources */,
+				7A89C9C0BA2AFCABDD0EA73A /* SettingsView.swift in Sources */,
+				132442E2798FC3CD9CA47063 /* SidebarView.swift in Sources */,
+				EB23F3DAAD31740EE39108C8 /* StorageService.swift in Sources */,
+				DE8B391EBF1399DCFC996DA2 /* ThinkingCard.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		07C1FF24638D6657243A48ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedByXcode;
+				INFOPLIST_KEY_CFBundleDisplayName = "Orka AI";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.orkaai.app;
+				PRODUCT_NAME = "Orka AI";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1B81EE9D9E154EE87051E734 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedByXcode;
+				INFOPLIST_KEY_CFBundleDisplayName = "Orka AI";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.orkaai.app;
+				PRODUCT_NAME = "Orka AI";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		48476F50D2582063D46FE5BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		9CB9D005D39220B68B8DF682 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B57839BB4C36BE87827253B4 /* Build configuration list for PBXProject "OrkaAI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48476F50D2582063D46FE5BF /* Debug */,
+				9CB9D005D39220B68B8DF682 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9086B7042EA064CAD704691 /* Build configuration list for PBXNativeTarget "OrkaAI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B81EE9D9E154EE87051E734 /* Debug */,
+				07C1FF24638D6657243A48ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 05DD1DC5D06D37937262ED5F /* Project object */;
+}
